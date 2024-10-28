@@ -1,4 +1,4 @@
-using CarShop.Web.Models;
+using CarShop.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
