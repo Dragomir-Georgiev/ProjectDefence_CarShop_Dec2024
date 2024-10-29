@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace CarShop.Web.Data.Migrations
+namespace CarShop.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

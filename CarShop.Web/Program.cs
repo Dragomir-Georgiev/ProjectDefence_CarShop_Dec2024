@@ -1,4 +1,4 @@
-using CarShop.Web.Data;
+using CarShop.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
