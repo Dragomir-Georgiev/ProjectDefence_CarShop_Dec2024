@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarShop.Data.Models
 {
-    public class RentableCar
+    public class Car
     {
         public Guid Id { get; set; }
         public string Make { get; set; }
