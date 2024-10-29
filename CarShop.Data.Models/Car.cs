@@ -22,7 +22,7 @@ namespace CarShop.Data.Models
         public int SeatingCapacity { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public decimal PricePerDay { get; set; }
-        public bool Available { get; set; }
+        public bool IsAvailable { get; set; }
         public bool IsDeleted { get; set; }
         public Guid CarCategoryId { get; set; }
         public CarCategory CarCategory { get; set; }

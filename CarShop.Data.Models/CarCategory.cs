@@ -13,7 +13,6 @@ namespace CarShop.Data.Models
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
-
         public ICollection<Car> Cars { get; set; } = new HashSet<Car>();
     }
 }
