@@ -9,7 +9,9 @@ namespace CarShop.Data.Models
     public class FeedBack
     {
         public Guid Id { get; set; }
-        //TODO ADD USER 
+
+        public Guid ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public Guid CarId { get; set; }
         public Car Car { get; set; }
