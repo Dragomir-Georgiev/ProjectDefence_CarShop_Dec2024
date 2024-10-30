@@ -26,4 +26,9 @@
     <Folder Include="Configuration\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarShop.Common\CarShop.Common.csproj" />
+    <ProjectReference Include="..\CarShop.Data.Models\CarShop.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>
