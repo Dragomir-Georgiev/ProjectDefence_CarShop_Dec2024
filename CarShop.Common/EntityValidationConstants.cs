@@ -33,5 +33,13 @@ namespace CarShop.Common
             public const int DescriptionMinLength = 10;
             public const int DescriptionMaxLength = 50;
         }
+
+        public static class Feedback
+        {
+            public const int CommentMinLength = 10;
+            public const int CommentMaxLength = 250;
+            public const int RatingMinRange = 1;
+            public const int RatingMaxRange = 5;
+        }
     }
 }
