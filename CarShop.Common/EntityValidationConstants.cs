@@ -21,5 +21,11 @@ namespace CarShop.Common
             public const int NameMinLength = 3;
             public const int NameMaxLength = 20;
         }
+
+        public static class DamageReport
+        {
+            public const int DescriptionMinLength = 50;
+            public const int DescriptionMaxLength = 500;
+        }
     }
 }
