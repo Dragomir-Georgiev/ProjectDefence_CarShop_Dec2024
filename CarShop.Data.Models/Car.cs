@@ -59,5 +59,9 @@ namespace CarShop.Data.Models
         public Guid CarCategoryId { get; set; }
         [ForeignKey(nameof(CarCategoryId))]
         public CarCategory CarCategory { get; set; } = null!;
+
+        public ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
+        public ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
+        public ICollection<CarDiscount> CarDiscounts { get; set; } = new HashSet<CarDiscount>();
     }
 }
