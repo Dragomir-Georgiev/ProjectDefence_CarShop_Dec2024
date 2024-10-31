@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace CarShop.Common
 {
-    public class EntityValidationConstants
+    public static class EntityValidationConstants
     {
+        public static class Car
+        {
+            public const int MakeMinLength = 3;
+            public const int MakeMaxLength = 60;
+            public const int ModelMinLenght = 3;
+            public const int ModelMaxLenght = 60;
+        }
     }
 }
