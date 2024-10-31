@@ -6,14 +6,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarShop.Common.EntityValidationConstants.Feedback;
 
 namespace CarShop.Data.Models
 {
-    public class Rental
+    public class Feedback
     {
         [Key]
-        [Comment("Rental unique identifier")]
+        [Comment("Feedback unique identifier")]
         public Guid Id { get; set; } = Guid.NewGuid();
+
         public Guid ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]
         public ApplicationUser ApplicationUser { get; set; } = null!;
@@ -21,11 +23,14 @@ namespace CarShop.Data.Models
         public Guid CarId { get; set; }
         [ForeignKey(nameof(CarId))]
         public Car Car { get; set; } = null!;
+
         [Required]
-        public DateTime StartDate { get; set; }
+        [MaxLength(CommentMaxLength)]
+        [Comment("Feedback comment from user for the car")]
+        public string Comment { get; set; } = null!;
         [Required]
-        public DateTime EndDate { get; set; }
+        public int Rating { get; set; }
         [Required]
-        public decimal TotalCost { get; set; }
+        public DateTime FeedbackDate { get; set; }
     }
 }

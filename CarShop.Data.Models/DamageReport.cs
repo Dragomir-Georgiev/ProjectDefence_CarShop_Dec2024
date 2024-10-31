@@ -14,7 +14,7 @@ namespace CarShop.Data.Models
     {
         [Key]
         [Comment("Damage report unique identifier")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         [MaxLength(DescriptionMaxLength)]
         [Comment("Description of the damage to the car")]

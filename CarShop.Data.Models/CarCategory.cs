@@ -14,7 +14,7 @@ namespace CarShop.Data.Models
     {
         [Key]
         [Comment("Car category unique identifier")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         [MaxLength(NameMaxLength)]
         [Comment("The name of the category")]

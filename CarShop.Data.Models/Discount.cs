@@ -12,7 +12,7 @@ namespace CarShop.Data.Models
     {
         [Key]
         [Comment("Discount unique identifier")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         [MaxLength(DescriptionMaxLength)]
         [Comment("Description of the discount")]
