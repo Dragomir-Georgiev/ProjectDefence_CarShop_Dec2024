@@ -23,7 +23,9 @@ namespace CarShop.Web
                     cfg.SignIn.RequireConfirmedAccount = false;
                 })
                 .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddUserManager<UserManager<ApplicationUser>>(); ;
 
             builder.Services.AddControllersWithViews();
 
