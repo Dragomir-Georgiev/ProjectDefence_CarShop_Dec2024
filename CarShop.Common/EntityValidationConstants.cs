@@ -15,5 +15,11 @@ namespace CarShop.Common
             public const int ModelMinLenght = 3;
             public const int ModelMaxLenght = 60;
         }
+
+        public static class CarCategory
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 20;
+        }
     }
 }
