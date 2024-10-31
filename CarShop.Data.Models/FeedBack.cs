@@ -14,7 +14,7 @@ namespace CarShop.Data.Models
     {
         [Key]
         [Comment("Feedback unique identifier")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public Guid ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]

@@ -8,5 +8,8 @@ namespace CarShop.Data.Models
         {
             this.Id = Guid.NewGuid();
         }
+
+        public ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
+        public ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
     }
 }
