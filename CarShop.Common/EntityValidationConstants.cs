@@ -27,5 +27,11 @@ namespace CarShop.Common
             public const int DescriptionMinLength = 50;
             public const int DescriptionMaxLength = 500;
         }
+
+        public static class Discount
+        {
+            public const int DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 50;
+        }
     }
 }
