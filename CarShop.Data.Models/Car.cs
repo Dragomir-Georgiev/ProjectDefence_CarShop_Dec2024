@@ -63,5 +63,6 @@ namespace CarShop.Data.Models
         public ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
         public ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
         public ICollection<CarDiscount> CarDiscounts { get; set; } = new HashSet<CarDiscount>();
+        public ICollection<DamageReport> DamageReports { get; set; } = new HashSet<DamageReport>();
     }
 }
