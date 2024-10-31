@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarShop.Data.Models
 {
-    public class FeedBack
+    public class Feedback
     {
         public Guid Id { get; set; }
 
