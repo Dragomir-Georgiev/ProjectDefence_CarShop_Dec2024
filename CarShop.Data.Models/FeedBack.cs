@@ -1,23 +1,36 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarShop.Common.EntityValidationConstants.Feedback;
 
 namespace CarShop.Data.Models
 {
     public class Feedback
     {
+        [Key]
+        [Comment("Feedback unique identifier")]
         public Guid Id { get; set; }
 
         public Guid ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey(nameof(ApplicationUserId))]
+        public ApplicationUser ApplicationUser { get; set; } = null!;
 
         public Guid CarId { get; set; }
-        public Car Car { get; set; }
+        [ForeignKey(nameof(CarId))]
+        public Car Car { get; set; } = null!;
 
-        public string Comment { get; set; }
+        [Required]
+        [MaxLength(CommentMaxLength)]
+        [Comment("Feedback comment from user for the car")]
+        public string Comment { get; set; } = null!;
+        [Required]
         public int Rating { get; set; }
+        [Required]
         public DateTime FeedbackDate { get; set; }
     }
 }
