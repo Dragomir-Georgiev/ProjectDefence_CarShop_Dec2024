@@ -16,13 +16,13 @@ namespace CarShop.Data.Models
         [Comment("Feedback unique identifier")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid ApplicationUserId { get; set; }
-        [ForeignKey(nameof(ApplicationUserId))]
-        public ApplicationUser ApplicationUser { get; set; } = null!;
-
         public Guid CarId { get; set; }
         [ForeignKey(nameof(CarId))]
         public Car Car { get; set; } = null!;
+
+        public Guid ApplicationUserId { get; set; }
+        [ForeignKey(nameof(ApplicationUserId))]
+        public ApplicationUser ApplicationUser { get; set; } = null!;
 
         [Required]
         [MaxLength(CommentMaxLength)]
