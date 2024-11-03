@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241101145713_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,53 +198,6 @@ namespace CarShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CarCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f8aad825-e528-4caa-aa5b-7c6ac552fe06"),
-                            CategoryName = "SUV"
-                        },
-                        new
-                        {
-                            Id = new Guid("70ace146-53a7-4896-aabc-2b9bcdf30082"),
-                            CategoryName = "Convertible"
-                        },
-                        new
-                        {
-                            Id = new Guid("f288666d-c2a8-4664-b811-769f29f5ee2c"),
-                            CategoryName = "Hatchback"
-                        },
-                        new
-                        {
-                            Id = new Guid("56214e27-720e-4d5e-b93b-bd08612399c6"),
-                            CategoryName = "Sedan"
-                        },
-                        new
-                        {
-                            Id = new Guid("401a2e1a-8fea-44ac-9431-d19e1a2991d0"),
-                            CategoryName = "Sports car"
-                        },
-                        new
-                        {
-                            Id = new Guid("1efe34f6-0e1f-4054-a1b5-856ddf6c70ef"),
-                            CategoryName = "Coupe"
-                        },
-                        new
-                        {
-                            Id = new Guid("8bde63ad-9d00-4f21-afd7-7de263957594"),
-                            CategoryName = "Pickup truck"
-                        },
-                        new
-                        {
-                            Id = new Guid("fa3d82ce-dcf2-43a9-b140-b4d74bc4245b"),
-                            CategoryName = "Roadster"
-                        },
-                        new
-                        {
-                            Id = new Guid("6bf86d29-4d69-41c4-880e-ef7ffed27da0"),
-                            CategoryName = "Minivan"
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.CarDiscount", b =>

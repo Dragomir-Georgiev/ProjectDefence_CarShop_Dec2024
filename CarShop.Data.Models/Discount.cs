@@ -20,5 +20,6 @@ namespace CarShop.Data.Models
         [Required]
         [Comment("Percentage of the discount for the daily price of the car")]
         public double DiscountPercentage { get; set; }
+        public ICollection<CarDiscount> CarDiscounts { get; set; } = new HashSet<CarDiscount>();
     }
 }

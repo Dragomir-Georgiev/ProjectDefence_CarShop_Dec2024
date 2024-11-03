@@ -14,18 +14,16 @@ namespace CarShop.Data.Models
         [Key]
         [Comment("Rental unique identifier")]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid ApplicationUserId { get; set; }
-        [ForeignKey(nameof(ApplicationUserId))]
-        public ApplicationUser ApplicationUser { get; set; } = null!;
-
         public Guid CarId { get; set; }
         [ForeignKey(nameof(CarId))]
         public Car Car { get; set; } = null!;
+
         [Required]
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
         [Required]
         public decimal TotalCost { get; set; }
+        public ICollection<ApplicationUserRental> ApplicationUserRentals { get; set; } = new HashSet<ApplicationUserRental>();
     }
 }

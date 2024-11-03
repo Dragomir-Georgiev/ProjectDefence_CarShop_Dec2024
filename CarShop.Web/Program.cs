@@ -25,7 +25,7 @@ namespace CarShop.Web
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
-                .AddUserManager<UserManager<ApplicationUser>>(); ;
+                .AddUserManager<UserManager<ApplicationUser>>();
 
             builder.Services.AddControllersWithViews();
 
