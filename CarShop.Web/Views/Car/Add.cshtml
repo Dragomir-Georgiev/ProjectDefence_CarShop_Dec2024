@@ -1,0 +1,91 @@
+﻿@using CarShop.Web.ViewModels.Car
+@model AddCarViewModel
+
+@{
+    ViewData["Title"] = "Add New Car";
+}
+
+<h1>Add New Car</h1>
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Make" class="control-label"></label>
+        <input asp-for="Make" class="form-control" />
+        <span asp-validation-for="Make" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Model" class="control-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductionYear" class="control-label"></label>
+        <input asp-for="ProductionYear" class="form-control" />
+        <span asp-validation-for="ProductionYear" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FuelConsumption" class="control-label"></label>
+        <input asp-for="FuelConsumption" class="form-control" />
+        <span asp-validation-for="FuelConsumption" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TankVolume" class="control-label"></label>
+        <input asp-for="TankVolume" class="form-control" />
+        <span asp-validation-for="TankVolume" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MaximumSpeed" class="control-label"></label>
+        <input asp-for="MaximumSpeed" class="form-control" />
+        <span asp-validation-for="MaximumSpeed" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoorsCount" class="control-label"></label>
+        <input asp-for="DoorsCount" class="form-control" />
+        <span asp-validation-for="DoorsCount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SeatingCapacity" class="control-label"></label>
+        <input asp-for="SeatingCapacity" class="form-control" />
+        <span asp-validation-for="SeatingCapacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TransmissionType" class="control-label"></label>
+        <select asp-for="TransmissionType" class="form-control" asp-items="Html.GetEnumSelectList<CarShop.Data.Models.Enums.TransmissionType>()"></select>
+        <span asp-validation-for="TransmissionType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PricePerDay" class="control-label"></label>
+        <input asp-for="PricePerDay" class="form-control" />
+        <span asp-validation-for="PricePerDay" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CarImage" class="control-label">Car Image URL</label>
+        <input asp-for="CarImage" class="form-control" />
+        <span asp-validation-for="CarImage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.CarCategoryId" class="form-label-add-edit">Select Car Category</label>
+        <select asp-for="@Model.CarCategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.CarCategories, "Id", "CategoryName"))">
+            <option value="">Select Category...</option>
+        </select>
+        <span asp-validation-for="@Model.CarCategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

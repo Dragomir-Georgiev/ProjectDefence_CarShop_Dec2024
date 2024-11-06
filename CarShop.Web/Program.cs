@@ -22,6 +22,9 @@ namespace CarShop.Web
                 .AddIdentity<ApplicationUser, IdentityRole<Guid>>(cfg =>
                 {
                     cfg.SignIn.RequireConfirmedAccount = false;
+                    cfg.Password.RequireUppercase = false;
+                    cfg.Password.RequireDigit = false;
+                    cfg.Password.RequireNonAlphanumeric = false;
                 })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
