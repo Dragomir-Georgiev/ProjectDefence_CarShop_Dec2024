@@ -14,6 +14,21 @@ namespace CarShop.Common
             public const int MakeMaxLength = 60;
             public const int ModelMinLenght = 3;
             public const int ModelMaxLenght = 60;
+            public const int ProductionYearMinRange = 1886;
+            public const int ProductionYearMaxRange = 2100;
+            public const double FuelConsumptionMinRange = 1.0;
+            public const double FuelConsumptionMaxRange = 100;
+            public const double TankVolumeMinRange = 1;
+            public const double TankVolumeMaxRange = 181;
+            public const int MaximumSpeedMinRange = 45;
+            public const int MaximumSpeedMaxRange = 1250;
+            public const int CarImageMaxLength = 500;
+            public const int DoorsCountMinRange = 1;
+            public const int DoorsCountMaxRange = 10; 
+            public const int SeatingCapacityMinRange = 1;
+            public const int SeatingCapacityMaxRange = 20;
+            public const string PricePerDayMinRange = "20";
+            public const string PricePerDayMaxRange = "10000";
         }
 
         public static class CarCategory

@@ -1,0 +1,33 @@
+﻿@using CarShop.Web.ViewModels.Car
+@model IEnumerable<AllCarsIndexViewModel>
+@{
+    ViewData["Title"] = "All Cars";
+}
+<h1>Cars</h1>
+<p>
+    <a asp-action="Add" class="btn btn-primary">Add New Car</a>
+</p>
+<div class="row">
+    @foreach (var car in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="@(!string.IsNullOrEmpty(car.CarImage) ? car.CarImage : "/images/default-car.png")"
+                     class="card-img-top"
+                     alt="Car Image"
+                     style="width: 100%; height: 200px; object-fit: cover;" />
+                <div class="card-body">
+                    <h5 class="card-title">@car.Make @car.Model</h5>
+                    <p class="card-text">
+                        <strong>Price Per Day:</strong> @car.PricePerDay<br />
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
