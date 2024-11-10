@@ -23,7 +23,6 @@ namespace CarShop.Web.ViewModels.Car
         public int SeatingCapacity { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public decimal PricePerDay { get; set; }
-        public bool IsAvailable { get; set; }
         [Required]
         public string CategoryName { get; set; } = null!;
         public string? CarImage { get; set; }

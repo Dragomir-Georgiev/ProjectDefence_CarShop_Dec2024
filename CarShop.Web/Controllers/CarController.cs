@@ -85,7 +85,7 @@ namespace CarShop.Web.Controllers
 
             CarDetailsViewModel? carModel = await _context
                 .Cars
-                .Where(c => c.IsDeleted == false)
+                .Where(c => c.IsDeleted == false && c.IsAvailable == true)
                 .Select(c => new CarDetailsViewModel()
                 {
                     Id = c.Id,
@@ -99,11 +99,10 @@ namespace CarShop.Web.Controllers
                     SeatingCapacity = c.SeatingCapacity,
                     TransmissionType = c.TransmissionType,
                     PricePerDay = c.PricePerDay,
-                    IsAvailable = c.IsAvailable,
                     CategoryName = c.CarCategory.CategoryName,
                     CarImage = c.CarImage
                 })
-                .FirstOrDefaultAsync(c => c.Id == carGuid && c.IsAvailable == true);
+                .FirstOrDefaultAsync(c => c.Id == carGuid);
 
             if (carModel == null)
             {
