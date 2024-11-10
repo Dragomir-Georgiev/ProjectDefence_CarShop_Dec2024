@@ -67,6 +67,53 @@ namespace CarShop.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string? id)
+        {
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid carGuid = Guid.Empty;
+            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            CarDetailsViewModel? carModel = await _context
+                .Cars
+                .Where(c => c.IsDeleted == false)
+                .Select(c => new CarDetailsViewModel()
+                {
+                    Id = c.Id,
+                    Make = c.Make,
+                    Model = c.Model,
+                    ProductionYear = c.ProductionYear,
+                    FuelConsumption = c.FuelConsumption,
+                    TankVolume = c.TankVolume,
+                    MaximumSpeed = c.MaximumSpeed,
+                    DoorsCount = c.DoorsCount,
+                    SeatingCapacity = c.SeatingCapacity,
+                    TransmissionType = c.TransmissionType,
+                    PricePerDay = c.PricePerDay,
+                    IsAvailable = c.IsAvailable,
+                    CategoryName = c.CarCategory.CategoryName,
+                    CarImage = c.CarImage
+                })
+                .FirstOrDefaultAsync(c => c.Id == carGuid && c.IsAvailable == true);
+
+            if (carModel == null)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            return this.View(carModel);
+        }
+
+
         private string? GetCurrentUserId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
