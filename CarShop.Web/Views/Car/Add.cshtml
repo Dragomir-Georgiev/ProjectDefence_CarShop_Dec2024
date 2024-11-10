@@ -16,7 +16,7 @@
         <span asp-validation-for="Model" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ProductionYear" class="control-label"></label>
+        <label asp-for="ProductionYear" class="control-label">Production Year</label>
         <input asp-for="ProductionYear" class="form-control" />
         <span asp-validation-for="ProductionYear" class="text-danger"></span>
     </div>
@@ -36,22 +36,22 @@
         <span asp-validation-for="MaximumSpeed" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="DoorsCount" class="control-label"></label>
+        <label asp-for="DoorsCount" class="control-label">Doors Count</label>
         <input asp-for="DoorsCount" class="form-control" />
         <span asp-validation-for="DoorsCount" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="SeatingCapacity" class="control-label"></label>
+        <label asp-for="SeatingCapacity" class="control-label">Seating Capacity</label>
         <input asp-for="SeatingCapacity" class="form-control" />
         <span asp-validation-for="SeatingCapacity" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="TransmissionType" class="control-label"></label>
+        <label asp-for="TransmissionType" class="control-label">Transmission Type</label>
         <select asp-for="TransmissionType" class="form-control" asp-items="Html.GetEnumSelectList<CarShop.Data.Models.Enums.TransmissionType>()"></select>
         <span asp-validation-for="TransmissionType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PricePerDay" class="control-label"></label>
+        <label asp-for="PricePerDay" class="control-label">Price Per Day</label>
         <input asp-for="PricePerDay" class="form-control" />
         <span asp-validation-for="PricePerDay" class="text-danger"></span>
     </div>
