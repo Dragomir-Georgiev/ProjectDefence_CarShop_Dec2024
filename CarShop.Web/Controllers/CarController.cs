@@ -5,6 +5,8 @@ using CarShop.Data.Models;
 using CarShop.Web.ViewModels.Car;
 using Humanizer.Localisation;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Serialization;
+using System.Globalization;
 
 namespace CarShop.Web.Controllers
 {
@@ -110,6 +112,99 @@ namespace CarShop.Web.Controllers
             }
 
             return this.View(carModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid carGuid = Guid.Empty;
+            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+            var model = await _context.Cars
+                .Where(c => c.IsDeleted == false)
+                .Where(c => c.Id == carGuid)
+                .AsNoTracking()
+                .Select(c => new EditCarViewModel()
+                {
+                    Make = c.Make,
+                    Model = c.Model,
+                    CarCategoryId = c.CarCategoryId,
+                    TransmissionType = c.TransmissionType,
+                    PricePerDay = c.PricePerDay,
+                    MaximumSpeed = c.MaximumSpeed,
+                    CarImage = c.CarImage,
+                    DoorsCount = c.DoorsCount,
+                    FuelConsumption = c.FuelConsumption,
+                    ProductionYear = c.ProductionYear,
+                    SeatingCapacity = c.SeatingCapacity,
+                    TankVolume = c.TankVolume,
+                })
+                .FirstOrDefaultAsync();
+
+            model!.CarCategories = await GetCategories();
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCarViewModel carModel, string? id)
+        {
+            if (!ModelState.IsValid)
+            {
+                carModel!.CarCategories = await GetCategories();
+                return View(carModel);
+            }
+
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                carModel!.CarCategories = await GetCategories();
+                return View(carModel);
+            }
+
+            Guid carGuid = Guid.Empty;
+            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            if (!isGuidValid)
+            {
+                carModel!.CarCategories = await GetCategories();
+                return View(carModel);
+            }
+
+            Car? entity = await _context.Cars.FindAsync(carGuid);
+
+            if (entity == null || entity.IsDeleted)
+            {
+                return BadRequest();
+            }
+
+            entity.Make = carModel.Make;
+            entity.Model = carModel.Model;
+            entity.ProductionYear = carModel.ProductionYear;
+            entity.FuelConsumption = carModel.FuelConsumption;
+            entity.TankVolume = carModel.TankVolume;
+            entity.MaximumSpeed = carModel.MaximumSpeed;
+            entity.CarImage = carModel.CarImage;
+            entity.DoorsCount = carModel.DoorsCount;
+            entity.SeatingCapacity = carModel.SeatingCapacity;
+            entity.TransmissionType = carModel.TransmissionType;
+            entity.PricePerDay = carModel.PricePerDay;
+            entity.CarCategoryId = carModel.CarCategoryId;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
 
