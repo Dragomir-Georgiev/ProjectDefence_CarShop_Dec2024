@@ -191,6 +191,60 @@ namespace CarShop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            Guid carGuid = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref carGuid);
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Car? car = await _context.Cars
+                .Where(c => c.IsDeleted == false)
+                .Include(c => c.CarCategory)
+                .FirstOrDefaultAsync(c => c.Id == carGuid);
+
+            if (car == null) 
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            DeleteCarViewModel entity = new DeleteCarViewModel()
+            {
+                Id = car.Id.ToString(),
+                Model = car.Model,
+                Make = car.Make,
+                CategoryName = car.CarCategory.CategoryName
+            };
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(DeleteCarViewModel carModel)
+        {
+            Guid carGuid = Guid.Empty;
+            bool isGuidValid = IsGuidValid(carModel.Id, ref carGuid);
+            if (!isGuidValid)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Car? car = await _context.Cars
+                .Where(c => c.IsDeleted == false)
+                .Where(c => c.Id == carGuid)
+                .FirstOrDefaultAsync();
+
+            if (car != null)
+            {
+                car.IsDeleted = true;
+                await _context.SaveChangesAsync();
+            }
+
+            return this.RedirectToAction(nameof(Index));
+        }
 
         private string? GetCurrentUserId()
         {

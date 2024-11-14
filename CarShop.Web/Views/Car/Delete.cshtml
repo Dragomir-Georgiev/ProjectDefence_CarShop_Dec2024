@@ -1,0 +1,32 @@
+﻿@using CarShop.Web.ViewModels.Car
+@model DeleteCarViewModel
+
+@{
+    ViewData["Title"] = "Delete Car";
+}
+
+<h1>Delete Car</h1>
+
+<div class="alert alert-danger" role="alert">
+    Are you sure you want to delete this car?
+</div>
+
+<div>
+    <h4>Car Details</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Make</dt>
+        <dd class="col-sm-9">@Model.Make</dd>
+
+        <dt class="col-sm-3">Model</dt>
+        <dd class="col-sm-9">@Model.Model</dd>
+
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">@Model.CategoryName</dd>
+    </dl>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
