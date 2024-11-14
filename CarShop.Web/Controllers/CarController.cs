@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace CarShop.Web.Controllers
 {
-    public class CarController : Controller
+    public class CarController : BaseController
     {
         private readonly ApplicationDbContext _context;
         public CarController(ApplicationDbContext context)
@@ -73,13 +73,8 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string? id)
         {
-            if (String.IsNullOrWhiteSpace(id))
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
-
             Guid carGuid = Guid.Empty;
-            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            bool isGuidValid = IsGuidValid(id, ref carGuid);
             if (!isGuidValid)
             {
                 return this.RedirectToAction(nameof(Index));
@@ -117,13 +112,8 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string? id)
         {
-            if (String.IsNullOrWhiteSpace(id))
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
-
             Guid carGuid = Guid.Empty;
-            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            bool isGuidValid = IsGuidValid(id, ref carGuid);
             if (!isGuidValid)
             {
                 return this.RedirectToAction(nameof(Index));
@@ -168,14 +158,8 @@ namespace CarShop.Web.Controllers
                 return View(carModel);
             }
 
-            if (String.IsNullOrWhiteSpace(id))
-            {
-                carModel!.CarCategories = await GetCategories();
-                return View(carModel);
-            }
-
             Guid carGuid = Guid.Empty;
-            bool isGuidValid = Guid.TryParse(id, out carGuid);
+            bool isGuidValid =  IsGuidValid(id, ref carGuid);
             if (!isGuidValid)
             {
                 carModel!.CarCategories = await GetCategories();
