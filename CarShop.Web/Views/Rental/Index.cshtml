@@ -1,0 +1,32 @@
+﻿@using CarShop.Web.ViewModels.Rental
+@model IndexRentalViewModel
+
+@{
+    ViewData["Title"] = "Rent a car";
+}
+
+<h1>Rent @Model.Make @Model.Model</h1>
+
+<form asp-action="Index" method="post">
+    <input type="hidden" asp-for="CarId" />
+
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label"></label>
+        <input asp-for="StartDate" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label"></label>
+        <input asp-for="EndDate" class="form-control" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Next</button>
+    <a asp-action="Index" asp-controller="Car" class="btn btn-secondary">Cancel</a>
+    
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

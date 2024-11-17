@@ -1,0 +1,36 @@
+﻿@using CarShop.Web.ViewModels.Rental
+@model ConfirmRentalViewModel
+
+@{
+    ViewData["Title"] = "Confirm Rental";
+}
+
+<h1>Confirm Rental</h1>
+
+<div class="card mb-4">
+    <img src="@Model.CarImage" class="card-img-top" alt="Car Image" style="width: 100%; height: 300px; object-fit: cover;" />
+
+    <div class="card-body">
+        <h3 class="card-title">@Model.Make @Model.Model</h3>
+        <p class="card-text">
+            <strong>Start Date:</strong> @Model.StartDate.ToShortDateString()<br />
+            <strong>End Date:</strong> @Model.EndDate.ToShortDateString()<br />
+            <strong>Total Cost:</strong> @Model.TotalCost.ToString("C")
+        </p>
+    </div>
+</div>
+
+<form asp-action="ConfirmRent" method="post">
+    <input type="hidden" asp-for="CarId" />
+    <input type="hidden" asp-for="Make" />
+    <input type="hidden" asp-for="Model" />
+    <input type="hidden" asp-for="StartDate" />
+    <input type="hidden" asp-for="EndDate" />
+    <input type="hidden" asp-for="TotalCost" />
+
+    <div>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+        <a asp-action="Index" asp-controller="Car" class="btn btn-secondary">Cancel</a>
+        <a asp-action="Index" asp-controller="Rental" asp-route-id="@Model.CarId" class="btn btn-warning">Back</a>
+    </div>
+</form>

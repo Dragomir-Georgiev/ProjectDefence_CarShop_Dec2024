@@ -1,0 +1,38 @@
+﻿@using CarShop.Web.ViewModels.Rental
+@model IEnumerable<RentedCarViewModel>
+
+@{
+    ViewData["Title"] = "My Rented Cars";
+}
+
+<h1>My Rented Cars</h1>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@car.CarImage" class="card-img-top" alt="Car Image" style="width: 100%; height: 200px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title">@car.Make @car.Model</h5>
+                        <p class="card-text">
+                            <strong>Rental Period:</strong> @car.StartDate.ToShortDateString() - @car.EndDate.ToShortDateString()<br />
+                            <strong>Total Cost:</strong> @car.TotalCost.ToString("C")<br />
+                        </p>
+                        <form asp-action="RemoveRentedCar" method="get">
+                            <input type="hidden" name="rentalId" value="@car.RentalId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel Reservation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-muted">You have not rented any cars yet.</p>
+}
