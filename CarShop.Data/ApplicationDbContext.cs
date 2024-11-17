@@ -19,7 +19,7 @@ namespace CarShop.Data
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<ApplicationUser> ApplicationsUsers { get; set; }
-        public DbSet<ApplicationUser> ApplicationsUsersRentals { get; set; }
+        public DbSet<ApplicationUserRental> ApplicationsUsersRentals { get; set; }
         public DbSet<CarCategory> CarCategories { get; set; }
         public DbSet<CarDiscount> CarDiscounts { get; set; }
         public DbSet<DamageReport> DamageReports { get; set; }
