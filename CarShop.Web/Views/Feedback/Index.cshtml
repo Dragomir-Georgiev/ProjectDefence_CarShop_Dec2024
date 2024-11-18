@@ -1,0 +1,47 @@
+﻿@using CarShop.Web.ViewModels.Feedback
+@model IndexFeedbackViewModel
+
+@{
+    ViewData["Title"] = "Feedbacks for " + Model.CarMakeModel;
+}
+
+<h1>Feedback for @Model.CarMakeModel</h1>
+
+<a asp-action="AddFeedback" asp-route-carId="@Model.CarId" class="btn btn-primary mb-4">Add Feedback</a>
+
+@if (Model.Feedbacks.Any())
+{
+    <ul class="list-group">
+        @foreach (var feedback in Model.Feedbacks)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="mb-1">
+                        <strong>@feedback.UserName:</strong>
+                    </p>
+                    <p class="mb-0">@feedback.Comment</p>
+                </div>
+
+                <div class="d-flex flex-column align-items-center">
+                    <small class="text-muted mb-2">@feedback.FeedbackDate.ToString("dd MMMM, yyyy")</small>
+                    <div class="d-flex gap-2">
+                        @if (feedback.IsOwner)
+                        {
+                            <form asp-action="EditFeedback" asp-route-id="@feedback.Id" method="get" class="mr-2">
+                                <button class="btn btn-warning btn-sm">Edit</button>
+                            </form>
+                            <form asp-action="RemoveFeedback" asp-route-id="@feedback.Id" method="post">
+                                <button class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        }
+                    </div>
+                    <span class="badge badge-light text-dark mt-2">@feedback.Rating/5</span>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">No feedback yet. Be the first to leave a comment!</p>
+}
