@@ -32,7 +32,11 @@ namespace CarShop.Web.ViewModels.Rental
         {
             if (EndDate < StartDate)
             {
-                yield return new ValidationResult("End date must be greater than the start date.", new[] { "EndDate" });
+                yield return new ValidationResult("End date must be greater or equal than the start date.", new[] { "EndDate" });
+            }
+            if (StartDate < DateTime.Now)
+            {
+                yield return new ValidationResult("Start date must be greater or equal than todays date.", new[] { "StartDate" });
             }
         }
     }
