@@ -29,5 +29,8 @@
     </div>
 </div>
 
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
-<a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">Rent</a>
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">Rent</a>
+    <a asp-action="Index" asp-controller="Feedback" asp-route-carId="@Model.Id" class="btn btn-info">View Feedbacks</a>
+</div>
