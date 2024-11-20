@@ -110,6 +110,14 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
+            var userId = GetCurrentUserId();
+            if (userId == Guid.Empty)
+            {
+                return this.RedirectToAction("Index", "Car");
+            }
+
+            validCar.IsAvailable = false;
+
             var rental = new Rental()
             {
                 Id = Guid.NewGuid(),
@@ -118,12 +126,6 @@ namespace CarShop.Web.Controllers
                 EndDate = viewModel.EndDate,
                 TotalCost = viewModel.TotalCost
             };
-
-            var userId = GetCurrentUserId();
-            if (userId == Guid.Empty)
-            {
-                return this.RedirectToAction("Index", "Car");
-            }
 
             rental.ApplicationUserRentals.Add(new ApplicationUserRental()
             {
@@ -175,6 +177,7 @@ namespace CarShop.Web.Controllers
             }
 
             var rental = await _context.Rentals
+                .Include(r => r.Car)
                 .FirstOrDefaultAsync(r => r.Id == rentalId);
 
             if (rental == null) 
@@ -189,6 +192,8 @@ namespace CarShop.Web.Controllers
             {
                 return RedirectToAction(nameof(RentedCars));
             }
+
+            rental.Car.IsAvailable = true;
 
             _context.ApplicationsUsersRentals.Remove(userRental);
             _context.Rentals.Remove(rental);
