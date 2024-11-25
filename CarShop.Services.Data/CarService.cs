@@ -26,14 +26,26 @@ namespace CarShop.Services.Data
 
             return cars;
         }
-        public Task AddCarAsync(AddCarViewModel carModel)
+        public async Task AddCarAsync(AddCarViewModel carModel)
         {
-            throw new NotImplementedException();
+            Car car = new Car();
+            AutoMapperConfig.MapperInstance.Map(carModel, car);
+            
+            car.IsAvailable = true;
+            await _carRepository.AddAsync(car);
         }
 
-        public Task<CarDetailsViewModel> GetCarDetailsByIdAsync(Guid Id)
+        public async Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var car = await _carRepository
+                .GetAllAttached()
+                .Include(c => c.CarCategory)
+                .Include(c => c.DamageReports)
+                .Include(c => c.Feedbacks)
+                .To<CarDetailsViewModel>()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            return car;
         }
 
     }

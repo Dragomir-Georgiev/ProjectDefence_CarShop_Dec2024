@@ -1,5 +1,6 @@
 ﻿using CarShop.Data.Models;
 using CarShop.Data.Models.Enums;
+using CarShop.Services.Mapping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,9 @@ using System.Threading.Tasks;
 using static CarShop.Common.EntityValidationConstants.Car;
 namespace CarShop.Web.ViewModels.Car
 {
-    public class AddCarViewModel
+    using Data.Models;
+
+    public class AddCarViewModel : IMapTo<Car>
     {
         [Required]
         [StringLength(MakeMaxLength, MinimumLength = MakeMinLength, ErrorMessage = "Make needs to be between 3 and 60 characters.")]
