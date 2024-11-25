@@ -1,5 +1,7 @@
 using CarShop.Data;
 using CarShop.Data.Models;
+using CarShop.Services.Mapping;
+using CarShop.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +33,9 @@ namespace CarShop.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
