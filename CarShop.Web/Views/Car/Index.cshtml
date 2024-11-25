@@ -26,7 +26,14 @@
                     <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
                     <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
                     <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
-                    <a asp-controller="Rental" asp-action="Index" asp-route-id="@car.Id" class="btn btn-success btn-sm">Rent</a>
+                    @if (car.IsAvailable)
+                    {
+                        <a asp-action="Index" asp-controller="Rental" asp-route-id="@car.Id" class="btn btn-primary btn-sm">Rent</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-info btn-sm" disabled>Not Available</button>
+                    }
                 </div>
             </div>
         </div>

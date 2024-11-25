@@ -1,0 +1,45 @@
+﻿@using CarShop.Web.ViewModels.DamageReport
+@model DamageReportIndexViewModel
+
+@{
+    ViewData["Title"] = "Damage Reports for " + Model.CarMakeModel;
+}
+
+<h1>Damage Reports for @Model.CarMakeModel</h1>
+
+<form asp-action="Index" method="post">
+    <input type="hidden" asp-for="CarId" />
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <label asp-for="CostEstimation" class="control-label"></label>
+        <input asp-for="CostEstimation" class="form-control" />
+        <span asp-validation-for="CostEstimation" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Report</button>
+</form>
+
+<h2>Existing Reports</h2>
+@if (Model.DamageReport != null)
+{
+    <div class="list-group mt-4">
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <p class="mb-1"><strong>Date:</strong> @Model.DamageReport.ReportedDate.ToString("MMMM dd, yyyy")</p>
+                <p class="mb-0">@Model.DamageReport.Description</p>
+                <p class="mb-0">@Model.DamageReport.CostEstimation.ToString("C")</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.DamageReport.Id" class="btn btn-warning btn-sm">Edit</a>
+                <form asp-action="Remove" asp-route-id="@Model.DamageReport.Id" method="post">
+                    <button class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-muted">No damage reports available for this car.</p>
+}

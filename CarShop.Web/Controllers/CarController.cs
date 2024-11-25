@@ -21,13 +21,14 @@ namespace CarShop.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var cars = await _context.Cars
-                .Where(c => c.IsDeleted == false && c.IsAvailable == true)
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new AllCarsIndexViewModel()
                 {
                     Id = c.Id.ToString(),
                     Make = c.Make,
                     Model = c.Model,
                     CarImage = c.CarImage,
+                    IsAvailable = c.IsAvailable,
                     PricePerDay = c.PricePerDay.ToString(),
                 })
                 .AsNoTracking()
@@ -82,7 +83,7 @@ namespace CarShop.Web.Controllers
 
             CarDetailsViewModel? carModel = await _context
                 .Cars
-                .Where(c => c.IsDeleted == false && c.IsAvailable == true)
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new CarDetailsViewModel()
                 {
                     Id = c.Id,
@@ -95,6 +96,7 @@ namespace CarShop.Web.Controllers
                     DoorsCount = c.DoorsCount,
                     SeatingCapacity = c.SeatingCapacity,
                     TransmissionType = c.TransmissionType,
+                    IsAvailable = c.IsAvailable,
                     PricePerDay = c.PricePerDay,
                     CategoryName = c.CarCategory.CategoryName,
                     CarImage = c.CarImage

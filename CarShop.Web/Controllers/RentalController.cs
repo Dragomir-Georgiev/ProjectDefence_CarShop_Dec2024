@@ -193,6 +193,8 @@ namespace CarShop.Web.Controllers
                 return RedirectToAction(nameof(RentedCars));
             }
 
+            //TODO check if the car has any damage reports before making it available
+
             rental.Car.IsAvailable = true;
 
             _context.ApplicationsUsersRentals.Remove(userRental);

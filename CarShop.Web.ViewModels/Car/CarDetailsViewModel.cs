@@ -26,5 +26,6 @@ namespace CarShop.Web.ViewModels.Car
         [Required]
         public string CategoryName { get; set; } = null!;
         public string? CarImage { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

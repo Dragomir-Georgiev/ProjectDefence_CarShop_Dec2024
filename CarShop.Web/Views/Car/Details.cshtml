@@ -31,6 +31,14 @@
 
 <div>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-    <a asp-controller="Rental" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">Rent</a>
+    @if (Model.IsAvailable)
+    {
+        <a asp-action="Index" asp-controller="Rental" asp-route-id="@Model.Id" class="btn btn-primary">Rent</a>
+    }
+    else
+    {
+        <button class="btn btn-secondary" disabled>Not Available</button>
+    }
     <a asp-action="Index" asp-controller="Feedback" asp-route-carId="@Model.Id" class="btn btn-info">View Feedbacks</a>
+    <a asp-action="Index" asp-controller="DamageReport" asp-route-carId="@Model.Id" class="btn btn-danger">Damage Reports</a>
 </div>

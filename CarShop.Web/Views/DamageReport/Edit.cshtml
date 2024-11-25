@@ -1,0 +1,23 @@
+﻿@using CarShop.Web.ViewModels.DamageReport
+@model DamageReportFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Damage Report";
+}
+
+<h1>Edit Damage Report</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CarId" />
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <label asp-for="CostEstimation"></label>
+        <input asp-for="CostEstimation" class="form-control" />
+        <span asp-validation-for="CostEstimation" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" asp-route-carId="@Model.CarId" class="btn btn-secondary">Cancel</a>
+</form>

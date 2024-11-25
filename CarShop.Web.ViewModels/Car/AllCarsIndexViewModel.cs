@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 namespace CarShop.Web.ViewModels.Car
@@ -12,5 +13,6 @@ namespace CarShop.Web.ViewModels.Car
         public string Model { get; set; } = null!;
         public string? CarImage { get; set; }
         public string PricePerDay { get; set; } = null!;
+        public bool IsAvailable { get; set; }
     }
 }
