@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using CarShop.Web.Infrastructure.Extensions;
+using CarShop.Services.Data.Interfaces;
+using CarShop.Services.Data;
 
 namespace CarShop.Web
 {
@@ -35,6 +37,8 @@ namespace CarShop.Web
                 .AddUserManager<UserManager<ApplicationUser>>();
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+
+            builder.Services.AddScoped<ICarService, CarService>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

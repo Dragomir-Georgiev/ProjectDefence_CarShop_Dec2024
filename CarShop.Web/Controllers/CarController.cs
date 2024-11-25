@@ -7,32 +7,24 @@ using Humanizer.Localisation;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.Serialization;
 using System.Globalization;
+using CarShop.Services.Data.Interfaces;
 
 namespace CarShop.Web.Controllers
 {
     public class CarController : BaseController
     {
         private readonly ApplicationDbContext _context;
-        public CarController(ApplicationDbContext context)
+        private readonly ICarService _carService;
+        public CarController(ApplicationDbContext context, ICarService carService)
         {
             _context = context;
+            _carService = carService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var cars = await _context.Cars
-                .Where(c => c.IsDeleted == false)
-                .Select(c => new AllCarsIndexViewModel()
-                {
-                    Id = c.Id.ToString(),
-                    Make = c.Make,
-                    Model = c.Model,
-                    CarImage = c.CarImage,
-                    IsAvailable = c.IsAvailable,
-                    PricePerDay = c.PricePerDay.ToString(),
-                })
-                .AsNoTracking()
-                .ToListAsync();
+            IEnumerable<AllCarsIndexViewModel> cars = 
+                await _carService.IndexGetAllAsync(); 
             return View(cars);
         }
         [HttpGet]

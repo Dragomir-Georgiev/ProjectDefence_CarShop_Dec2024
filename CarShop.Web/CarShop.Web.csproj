@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CarShop.Common\CarShop.Common.csproj" />
     <ProjectReference Include="..\CarShop.Data\CarShop.Data.csproj" />
+    <ProjectReference Include="..\CarShop.Services.Data\CarShop.Services.Data.csproj" />
     <ProjectReference Include="..\CarShop.Services.Mapping\CarShop.Services.Mapping.csproj" />
     <ProjectReference Include="..\CarShop.Web.Infrastructure\CarShop.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CarShop.Web.ViewModels\CarShop.Web.ViewModels.csproj" />

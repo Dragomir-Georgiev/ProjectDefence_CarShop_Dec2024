@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CarShop.Common\CarShop.Common.csproj" />
     <ProjectReference Include="..\CarShop.Data.Models\CarShop.Data.Models.csproj" />
+    <ProjectReference Include="..\CarShop.Services.Mapping\CarShop.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarShop.Data\CarShop.Data.csproj" />
+    <ProjectReference Include="..\CarShop.Web.ViewModels\CarShop.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
