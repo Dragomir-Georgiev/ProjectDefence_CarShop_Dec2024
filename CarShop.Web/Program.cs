@@ -1,9 +1,13 @@
 using CarShop.Data;
 using CarShop.Data.Models;
+using CarShop.Data.Repository;
+using CarShop.Data.Repository.Interfaces;
 using CarShop.Services.Mapping;
 using CarShop.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
+using CarShop.Web.Infrastructure.Extensions;
 
 namespace CarShop.Web
 {
@@ -29,6 +33,8 @@ namespace CarShop.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddUserManager<UserManager<ApplicationUser>>();
+
+            builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
