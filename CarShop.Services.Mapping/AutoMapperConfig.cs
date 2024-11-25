@@ -88,21 +88,27 @@ namespace CarShop.Services.Mapping
 
         private static IEnumerable<IHaveCustomMappings> GetCustomMappings(IEnumerable<Type> types)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             var customMaps = from t in types
                              from i in t.GetTypeInfo().GetInterfaces()
                              where typeof(IHaveCustomMappings).GetTypeInfo().IsAssignableFrom(t) &&
                                    !t.GetTypeInfo().IsAbstract &&
                                    !t.GetTypeInfo().IsInterface
                              select (IHaveCustomMappings)Activator.CreateInstance(t);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return customMaps;
         }
 
         private class TypesMap
         {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
             public Type Source { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
             public Type Destination { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         }
     }
 }
