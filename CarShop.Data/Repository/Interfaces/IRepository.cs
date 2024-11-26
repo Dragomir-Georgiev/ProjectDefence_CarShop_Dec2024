@@ -34,10 +34,10 @@ namespace CarShop.Data.Repository.Interfaces
 
         bool Delete(TType entity);
 
-        Task<bool> DeleteAsync(TType entity);
-
         bool Update(TType item);
 
-        Task<bool> UpdateAsync(TType item);
+        void SaveChanges();
+
+        Task SaveChangesAsync();
     }
 }

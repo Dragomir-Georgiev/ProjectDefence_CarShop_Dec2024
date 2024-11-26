@@ -71,39 +71,26 @@ namespace CarShop.Data.Repository
         public void Add(TType item)
         {
             _dbSet.Add(item);
-            _dbContext.SaveChanges();
         }
 
         public async Task AddAsync(TType item)
         {
             await _dbSet.AddAsync(item);
-            await _dbContext.SaveChangesAsync();
         }
 
         public void AddRange(TType[] items)
         {
             _dbSet.AddRange(items);
-            _dbContext.SaveChanges();
         }
 
         public async Task AddRangeAsync(TType[] items)
         {
             await _dbSet.AddRangeAsync(items);
-            await _dbContext.SaveChangesAsync();
         }
 
         public bool Delete(TType entity)
         {
             _dbSet.Remove(entity);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public async Task<bool> DeleteAsync(TType entity)
-        {
-            _dbSet.Remove(entity);
-            await _dbContext.SaveChangesAsync();
 
             return true;
         }
@@ -114,7 +101,6 @@ namespace CarShop.Data.Repository
             {
                 _dbSet.Attach(item);
                 _dbContext.Entry(item).State = EntityState.Modified;
-                _dbContext.SaveChanges();
 
                 return true;
             }
@@ -124,20 +110,14 @@ namespace CarShop.Data.Repository
             }
         }
 
-        public async Task<bool> UpdateAsync(TType item)
+        public void SaveChanges()
         {
-            try
-            {
-                _dbSet.Attach(item);
-                _dbContext.Entry(item).State = EntityState.Modified;
-                await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
+        }
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+        public async Task SaveChangesAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
