@@ -80,21 +80,7 @@ namespace CarShop.Services.Data
                 .Where(c => c.IsDeleted == false)
                 .Where(c => c.Id == carId)
                 .AsNoTracking()
-                .Select(c => new EditCarViewModel()
-                {
-                    Make = c.Make,
-                    Model = c.Model,
-                    CarCategoryId = c.CarCategoryId,
-                    TransmissionType = c.TransmissionType,
-                    PricePerDay = c.PricePerDay,
-                    MaximumSpeed = c.MaximumSpeed,
-                    CarImage = c.CarImage,
-                    DoorsCount = c.DoorsCount,
-                    FuelConsumption = c.FuelConsumption,
-                    ProductionYear = c.ProductionYear,
-                    SeatingCapacity = c.SeatingCapacity,
-                    TankVolume = c.TankVolume,
-                })
+                .To<EditCarViewModel>()
                 .FirstOrDefaultAsync();
 
             if (model == null)
@@ -117,7 +103,7 @@ namespace CarShop.Services.Data
         public async Task<bool> UpdateCarAsync(Guid carId, EditCarViewModel carModel)
         {
             Car? entity = await _carRepository
-                .GetByIdAsync(carId);
+                .GetByIdAsync(carId);   
 
             if (entity == null || entity.IsDeleted)
             {
@@ -149,13 +135,7 @@ namespace CarShop.Services.Data
                 .GetAllAttached()
                 .Where(c => c.IsDeleted == false)
                 .Include(c => c.CarCategory)
-                .Select(c => new DeleteCarViewModel()
-                {
-                    Id = c.Id.ToString(),
-                    Model = c.Model,
-                    Make = c.Make,
-                    CategoryName = c.CarCategory.CategoryName
-                })
+                .To<DeleteCarViewModel>()
                 .FirstOrDefaultAsync(c => c.Id == carId.ToString());
         }
 

@@ -13,7 +13,7 @@ using static CarShop.Common.EntityValidationConstants.Car;
 namespace CarShop.Web.ViewModels.Car
 {
     using CarShop.Data.Models;
-    public class EditCarViewModel
+    public class EditCarViewModel : IMapFrom<Car>
     {
         [Required]
         [StringLength(MakeMaxLength, MinimumLength = MakeMinLength, ErrorMessage = "Make needs to be between 3 and 60 characters.")]
