@@ -3,6 +3,7 @@ using CarShop.Data.Repository.Interfaces;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Services.Mapping;
 using CarShop.Web.ViewModels.Car;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarShop.Services.Data
@@ -10,10 +11,13 @@ namespace CarShop.Services.Data
     public class CarService : ICarService
     {
         private readonly IRepository<Car, Guid> _carRepository;
+        private readonly IRepository<CarCategory, Guid> _categoryRepository;
 
-        public CarService(IRepository<Car, Guid> carRepository)
+        public CarService(IRepository<Car, Guid> carRepository, 
+            IRepository<CarCategory, Guid> categoryRepository)
         {
             _carRepository = carRepository;
+            _categoryRepository = categoryRepository;
         }
         public async Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync()
         {
@@ -26,6 +30,24 @@ namespace CarShop.Services.Data
 
             return cars;
         }
+
+        public async Task<AddCarViewModel> GetCategoriesFromAddCarViewModel()
+        {
+            var categories = await _categoryRepository
+            .GetAllAttached()
+            .Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.CategoryName
+            })
+            .ToListAsync();
+
+            return new AddCarViewModel
+            {
+                CarCategories = categories
+            };
+        }
+
         public async Task AddCarAsync(AddCarViewModel carModel)
         {
             Car car = new Car();
@@ -47,6 +69,5 @@ namespace CarShop.Services.Data
 
             return car;
         }
-
     }
 }

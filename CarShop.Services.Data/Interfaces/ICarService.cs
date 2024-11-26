@@ -9,6 +9,8 @@ namespace CarShop.Services.Data.Interfaces
 
         Task AddCarAsync(AddCarViewModel carModel);
 
+        Task<AddCarViewModel> GetCategoriesFromAddCarViewModel();
+
         Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(Guid Id);
     }
 }
