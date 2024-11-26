@@ -121,25 +121,14 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            Car? car = await _context.Cars
-                .Where(c => c.IsDeleted == false)
-                .Include(c => c.CarCategory)
-                .FirstOrDefaultAsync(c => c.Id == carGuid);
+            DeleteCarViewModel? carViewModel = await _carService.GetDeleteCarModelAsync(carGuid);
 
-            if (car == null) 
+            if (carViewModel == null) 
             {
                 return this.RedirectToAction(nameof(Index));
             }
 
-            DeleteCarViewModel entity = new DeleteCarViewModel()
-            {
-                Id = car.Id.ToString(),
-                Model = car.Model,
-                Make = car.Make,
-                CategoryName = car.CarCategory.CategoryName
-            };
-
-            return View(entity);
+            return View(carViewModel);
         }
 
         [HttpPost]
@@ -152,24 +141,11 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            Car? car = await _context.Cars
-                .Where(c => c.IsDeleted == false)
-                .Where(c => c.Id == carGuid)
-                .FirstOrDefaultAsync();
-
-            if (car != null)
-            {
-                car.IsDeleted = true;
-                await _context.SaveChangesAsync();
-            }
+            await _carService.SoftDeleteCarAsync(carGuid);
 
             return this.RedirectToAction(nameof(Index));
         }
 
-        private string? GetCurrentUserId()
-        {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier);
-        }
         private async Task<List<SelectListItem>> GetCategories()
         {
             return await _context.CarCategories

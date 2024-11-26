@@ -57,6 +57,7 @@ namespace CarShop.Services.Data
             
             car.IsAvailable = true;
             await _carRepository.AddAsync(car);
+            await _carRepository.SaveChangesAsync();
         }
 
         public async Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(Guid id)
@@ -136,7 +137,41 @@ namespace CarShop.Services.Data
             entity.PricePerDay = carModel.PricePerDay;
             entity.CarCategoryId = carModel.CarCategoryId;
 
-            return await _carRepository.UpdateAsync(entity);
+            bool isUpdateSuccessful = _carRepository.Update(entity);
+            await _carRepository.SaveChangesAsync();
+
+            return isUpdateSuccessful;
+        }
+
+        public async Task<DeleteCarViewModel?> GetDeleteCarModelAsync(Guid carId)
+        {
+            return await _carRepository
+                .GetAllAttached()
+                .Where(c => c.IsDeleted == false)
+                .Include(c => c.CarCategory)
+                .Select(c => new DeleteCarViewModel()
+                {
+                    Id = c.Id.ToString(),
+                    Model = c.Model,
+                    Make = c.Make,
+                    CategoryName = c.CarCategory.CategoryName
+                })
+                .FirstOrDefaultAsync(c => c.Id == carId.ToString());
+        }
+
+        public async Task SoftDeleteCarAsync(Guid carId)
+        {
+            Car? car = await _carRepository
+                .GetAllAttached()
+                .Where(c => c.IsDeleted == false)
+                .Where(c => c.Id == carId)
+                .FirstOrDefaultAsync();
+
+            if (car != null)
+            {
+                car.IsDeleted = true;
+                await _carRepository.SaveChangesAsync();
+            }
         }
     }
 }

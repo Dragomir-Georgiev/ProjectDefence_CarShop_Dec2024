@@ -16,5 +16,9 @@ namespace CarShop.Services.Data.Interfaces
         Task<EditCarViewModel?> GetEditCarModelAsync(Guid id);
 
         Task<bool> UpdateCarAsync(Guid id, EditCarViewModel carModel);
+
+        Task<DeleteCarViewModel?> GetDeleteCarModelAsync(Guid id);
+
+        Task SoftDeleteCarAsync(Guid id);
     }
 }
