@@ -30,8 +30,7 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var model = new AddCarViewModel();
-            model.CarCategories = await GetCategories();
+            AddCarViewModel model = await _carService.GetCategoriesFromAddCarViewModel();
             return View(model);
         }
         [HttpPost]
@@ -39,7 +38,7 @@ namespace CarShop.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                carModel.CarCategories = await GetCategories();
+                carModel.CarCategories = (await _carService.GetCategoriesFromAddCarViewModel()).CarCategories;
                 return View(carModel);
             }
             
