@@ -77,7 +77,7 @@
 
     <div class="form-group">
         <label asp-for="@Model.CarCategoryId" class="form-label-add-edit">Select Car Category</label>
-        <select asp-for="@Model.CarCategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.CarCategories, "Id", "CategoryName"))">
+        <select asp-for="@Model.CarCategoryId" class="form-control" aria-required="true" asp-items="Model.CarCategories">
             <option value="">Select Category...</option>
         </select>
         <span asp-validation-for="@Model.CarCategoryId" class="text-danger"></span>

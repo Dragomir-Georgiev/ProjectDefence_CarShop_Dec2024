@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.Serialization;
 using System.Globalization;
 using CarShop.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CarShop.Web.Controllers
 {
@@ -77,28 +78,7 @@ namespace CarShop.Web.Controllers
             {
                 return this.RedirectToAction(nameof(Index));
             }
-            var model = await _context.Cars
-                .Where(c => c.IsDeleted == false)
-                .Where(c => c.Id == carGuid)
-                .AsNoTracking()
-                .Select(c => new EditCarViewModel()
-                {
-                    Make = c.Make,
-                    Model = c.Model,
-                    CarCategoryId = c.CarCategoryId,
-                    TransmissionType = c.TransmissionType,
-                    PricePerDay = c.PricePerDay,
-                    MaximumSpeed = c.MaximumSpeed,
-                    CarImage = c.CarImage,
-                    DoorsCount = c.DoorsCount,
-                    FuelConsumption = c.FuelConsumption,
-                    ProductionYear = c.ProductionYear,
-                    SeatingCapacity = c.SeatingCapacity,
-                    TankVolume = c.TankVolume,
-                })
-                .FirstOrDefaultAsync();
-
-            model!.CarCategories = await GetCategories();
+            var model = await _carService.GetEditCarModelAsync(carGuid);
 
             if (model == null)
             {
@@ -111,6 +91,7 @@ namespace CarShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditCarViewModel carModel, string? id)
         {
+            //TODO: Make a CarCategory Service to load the categories through it and not through the Car ViewModels. Change here and in the add action
             if (!ModelState.IsValid)
             {
                 carModel!.CarCategories = await GetCategories();
@@ -125,27 +106,7 @@ namespace CarShop.Web.Controllers
                 return View(carModel);
             }
 
-            Car? entity = await _context.Cars.FindAsync(carGuid);
-
-            if (entity == null || entity.IsDeleted)
-            {
-                return BadRequest();
-            }
-
-            entity.Make = carModel.Make;
-            entity.Model = carModel.Model;
-            entity.ProductionYear = carModel.ProductionYear;
-            entity.FuelConsumption = carModel.FuelConsumption;
-            entity.TankVolume = carModel.TankVolume;
-            entity.MaximumSpeed = carModel.MaximumSpeed;
-            entity.CarImage = carModel.CarImage;
-            entity.DoorsCount = carModel.DoorsCount;
-            entity.SeatingCapacity = carModel.SeatingCapacity;
-            entity.TransmissionType = carModel.TransmissionType;
-            entity.PricePerDay = carModel.PricePerDay;
-            entity.CarCategoryId = carModel.CarCategoryId;
-
-            await _context.SaveChangesAsync();
+            await _carService.UpdateCarAsync(carGuid, carModel);
 
             return RedirectToAction(nameof(Index));
         }
@@ -209,9 +170,16 @@ namespace CarShop.Web.Controllers
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
-        private async Task<List<CarCategory>> GetCategories()
+        private async Task<List<SelectListItem>> GetCategories()
         {
-            return await _context.CarCategories.ToListAsync();
+            return await _context.CarCategories
+                .AsQueryable()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.CategoryName
+                })
+                .ToListAsync();
         }
     }
 }

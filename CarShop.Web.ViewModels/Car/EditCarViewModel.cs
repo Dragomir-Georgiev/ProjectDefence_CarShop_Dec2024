@@ -1,5 +1,7 @@
 ﻿using CarShop.Data.Models;
 using CarShop.Data.Models.Enums;
+using CarShop.Services.Mapping;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +12,7 @@ using static CarShop.Common.EntityValidationConstants.Car;
 
 namespace CarShop.Web.ViewModels.Car
 {
+    using CarShop.Data.Models;
     public class EditCarViewModel
     {
         [Required]
@@ -45,6 +48,6 @@ namespace CarShop.Web.ViewModels.Car
         public decimal PricePerDay { get; set; }
         [Required]
         public Guid CarCategoryId { get; set; }
-        public IEnumerable<CarCategory> CarCategories { get; set; } = new List<CarCategory>();
+        public IEnumerable<SelectListItem> CarCategories { get; set; } = new List<SelectListItem>();
     }
 }

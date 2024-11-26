@@ -7,10 +7,14 @@ namespace CarShop.Services.Data.Interfaces
     {
         Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync();
 
-        Task AddCarAsync(AddCarViewModel carModel);
-
         Task<AddCarViewModel> GetCategoriesFromAddCarViewModel();
 
+        Task AddCarAsync(AddCarViewModel carModel);
+
         Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(Guid Id);
+
+        Task<EditCarViewModel?> GetEditCarModelAsync(Guid id);
+
+        Task<bool> UpdateCarAsync(Guid id, EditCarViewModel carModel);
     }
 }
