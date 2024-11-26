@@ -11,6 +11,7 @@ using static CarShop.Common.EntityValidationConstants.Car;
 namespace CarShop.Web.ViewModels.Car
 {
     using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AddCarViewModel : IMapTo<Car>
     {
@@ -47,6 +48,6 @@ namespace CarShop.Web.ViewModels.Car
         public decimal PricePerDay { get; set; }
         [Required]
         public Guid CarCategoryId { get; set; }
-        public IEnumerable<CarCategory> CarCategories { get; set; } = new List<CarCategory>();
+        public IEnumerable<SelectListItem> CarCategories { get; set; } = new List<SelectListItem>();
     }
 }
