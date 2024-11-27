@@ -37,8 +37,7 @@ namespace CarShop.Web
                 .AddUserManager<UserManager<ApplicationUser>>();
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-
-            builder.Services.AddScoped<ICarService, CarService>();
+            builder.Services.RegisterUserDefinedServices(typeof(ICarService).Assembly);
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
