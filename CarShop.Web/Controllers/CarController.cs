@@ -9,17 +9,19 @@ using System.Runtime.Serialization;
 using System.Globalization;
 using CarShop.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using CarShop.Web.ViewModels.CarCategories;
+using CarShop.Services.Data;
 
 namespace CarShop.Web.Controllers
 {
     public class CarController : BaseController
     {
-        private readonly ApplicationDbContext _context;
         private readonly ICarService _carService;
-        public CarController(ApplicationDbContext context, ICarService carService)
+        private readonly ICarCategoryService _carCategotyService;
+        public CarController(ApplicationDbContext context, ICarService carService, ICarCategoryService carCategotyService)
         {
-            _context = context;
             _carService = carService;
+            _carCategotyService = carCategotyService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -31,7 +33,7 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            AddCarViewModel model = await _carService.GetCategoriesFromAddCarViewModel();
+            AddCarViewModel model = await _carService.GetCarCategoriesAsync();
             return View(model);
         }
         [HttpPost]
@@ -39,7 +41,7 @@ namespace CarShop.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                carModel.CarCategories = (await _carService.GetCategoriesFromAddCarViewModel()).CarCategories;
+                carModel.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
                 return View(carModel);
             }
             
@@ -94,7 +96,7 @@ namespace CarShop.Web.Controllers
             //TODO: Make a CarCategory Service to load the categories through it and not through the Car ViewModels. Change here and in the add action
             if (!ModelState.IsValid)
             {
-                carModel!.CarCategories = await GetCategories();
+                carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
                 return View(carModel);
             }
 
@@ -102,7 +104,7 @@ namespace CarShop.Web.Controllers
             bool isGuidValid =  IsGuidValid(id, ref carGuid);
             if (!isGuidValid)
             {
-                carModel!.CarCategories = await GetCategories();
+                carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
                 return View(carModel);
             }
 
@@ -144,18 +146,6 @@ namespace CarShop.Web.Controllers
             await _carService.SoftDeleteCarAsync(carGuid);
 
             return this.RedirectToAction(nameof(Index));
-        }
-
-        private async Task<List<SelectListItem>> GetCategories()
-        {
-            return await _context.CarCategories
-                .AsQueryable()
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.CategoryName
-                })
-                .ToListAsync();
         }
     }
 }
