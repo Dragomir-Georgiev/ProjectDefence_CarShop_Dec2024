@@ -1,4 +1,5 @@
 ﻿using CarShop.Web.ViewModels.Car;
+using CarShop.Web.ViewModels.CarCategories;
 using System.Runtime.CompilerServices;
 
 namespace CarShop.Services.Data.Interfaces
@@ -7,7 +8,7 @@ namespace CarShop.Services.Data.Interfaces
     {
         Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync();
 
-        Task<AddCarViewModel> GetCategoriesFromAddCarViewModel();
+        Task<AddCarViewModel> GetCarCategoriesAsync();
 
         Task AddCarAsync(AddCarViewModel carModel);
 

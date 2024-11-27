@@ -3,6 +3,7 @@ using CarShop.Data.Repository.Interfaces;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Services.Mapping;
 using CarShop.Web.ViewModels.Car;
+using CarShop.Web.ViewModels.CarCategories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,13 +14,13 @@ namespace CarShop.Services.Data
     public class CarService : ICarService
     {
         private readonly IRepository<Car, Guid> _carRepository;
-        private readonly IRepository<CarCategory, Guid> _categoryRepository;
+        private readonly ICarCategoryService _carCategoryService;
 
-        public CarService(IRepository<Car, Guid> carRepository, 
-            IRepository<CarCategory, Guid> categoryRepository)
+        public CarService(IRepository<Car, Guid> carRepository,
+            ICarCategoryService carCategoryService)
         {
             _carRepository = carRepository;
-            _categoryRepository = categoryRepository;
+            _carCategoryService = carCategoryService;
         }
         public async Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync()
         {
@@ -33,20 +34,11 @@ namespace CarShop.Services.Data
             return cars;
         }
 
-        public async Task<AddCarViewModel> GetCategoriesFromAddCarViewModel()
+        public async Task<AddCarViewModel> GetCarCategoriesAsync()
         {
-            var categories = await _categoryRepository
-                .GetAllAttached()
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.CategoryName
-                })
-                .ToListAsync();
-
             return new AddCarViewModel
             {
-                CarCategories = categories
+                CarCategories = await _carCategoryService.GetCarCategoriesAsync()
             };
         }
 
@@ -88,15 +80,7 @@ namespace CarShop.Services.Data
                 return null;
             }
 
-            model!.CarCategories = await _categoryRepository
-                .GetAllAttached()
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.CategoryName
-                })
-                .ToListAsync();
-
+            model!.CarCategories = await _carCategoryService.GetCarCategoriesAsync();
             return model;
         }
 
