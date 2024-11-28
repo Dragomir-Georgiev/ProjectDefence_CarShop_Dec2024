@@ -2,25 +2,27 @@
 @model DamageReportIndexViewModel
 
 @{
-    ViewData["Title"] = "Damage Reports for " + Model.CarMakeModel;
+    ViewData["Title"] = "Damage Report for " + Model.CarMakeModel;
 }
 
-<h1>Damage Reports for @Model.CarMakeModel</h1>
+<h1>Damage Report for @Model.CarMakeModel</h1>
 
-<form asp-action="Index" method="post">
-    <input type="hidden" asp-for="CarId" />
-    <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-        <label asp-for="CostEstimation" class="control-label"></label>
-        <input asp-for="CostEstimation" class="form-control" />
-        <span asp-validation-for="CostEstimation" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Report</button>
-</form>
-
-<h2>Existing Reports</h2>
+@if (Model.DamageReport == null)
+{
+    <form asp-action="Index" method="post">
+        <input type="hidden" asp-for="CarId" />
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="CostEstimation" class="control-label"></label>
+            <input asp-for="CostEstimation" class="form-control" />
+            <span asp-validation-for="CostEstimation" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Report</button>
+    </form>
+}
+<h2>Existing Report</h2>
 @if (Model.DamageReport != null)
 {
     <div class="list-group mt-4">
@@ -41,5 +43,5 @@
 }
 else
 {
-    <p class="text-muted">No damage reports available for this car.</p>
+    <p class="text-muted">No damage report available for this car.</p>
 }
