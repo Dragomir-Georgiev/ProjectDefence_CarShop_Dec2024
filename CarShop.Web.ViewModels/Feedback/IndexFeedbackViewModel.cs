@@ -11,6 +11,5 @@ namespace CarShop.Web.ViewModels.Feedback
         public Guid CarId { get; set; }
         public string CarMakeModel { get; set; } = string.Empty;
         public List<FeedbackViewModel> Feedbacks { get; set; } = new List<FeedbackViewModel>();
-
     }
 }

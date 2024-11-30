@@ -30,7 +30,7 @@
                             <form asp-action="EditFeedback" asp-route-id="@feedback.Id" method="get" class="mr-2">
                                 <button class="btn btn-warning btn-sm">Edit</button>
                             </form>
-                            <form asp-action="RemoveFeedback" asp-route-id="@feedback.Id" method="post">
+                            <form asp-action="RemoveFeedback" asp-route-id="@feedback.Id" asp-route-carId="@Model.CarId" method="post">
                                 <button class="btn btn-danger btn-sm">Remove</button>
                             </form>
                         }

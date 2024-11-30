@@ -113,7 +113,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFeedback(Guid id)
+        public async Task<IActionResult> RemoveFeedback(Guid id, Guid carId)
         {
             var userId = GetCurrentUserId();
             if (userId == Guid.Empty)
@@ -128,7 +128,7 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            return this.RedirectToAction("Index", "Car");
+            return this.RedirectToAction("Index", new { carId = carId});
         }
 
         private Guid GetCurrentUserId()
