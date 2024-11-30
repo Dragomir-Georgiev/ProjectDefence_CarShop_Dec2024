@@ -48,7 +48,7 @@ namespace CarShop.Services.Data
 
             return viewModel;
         }
-        public async Task AddDamageReportAsync(DamageReportFormViewModel form)
+        public async Task AddDamageReportAsync(DamageReportEditViewModel form)
         {
             var validCar = await _carRepository.GetByIdAsync(form.CarId);
             if (validCar == null)
@@ -70,7 +70,7 @@ namespace CarShop.Services.Data
             await _damageReportRepository.SaveChangesAsync();
         }
 
-        public async Task<DamageReportFormViewModel?> GetDamageReportForEditAsync(Guid reportId)
+        public async Task<DamageReportEditViewModel?> GetDamageReportForEditAsync(Guid reportId)
         {
             var report = await _damageReportRepository.GetByIdAsync(reportId);
 
@@ -79,7 +79,7 @@ namespace CarShop.Services.Data
                 return null;
             }
 
-            return new DamageReportFormViewModel
+            return new DamageReportEditViewModel
             {
                 Id = report.Id,
                 CarId = report.CarId,
@@ -87,7 +87,7 @@ namespace CarShop.Services.Data
                 CostEstimation = report.CostEstimation,
             };
         }
-        public async Task EditDamageReportAsync(DamageReportFormViewModel form)
+        public async Task EditDamageReportAsync(DamageReportEditViewModel form)
         {
             var report = await _damageReportRepository.GetByIdAsync(form.Id);
             if (report == null)

@@ -11,9 +11,9 @@ namespace CarShop.Services.Data.Interfaces
     public interface IDamageReportService
     {
         Task<DamageReportIndexViewModel?> GetDamageReportsByCarIdAsync(Guid carId);
-        Task AddDamageReportAsync(DamageReportFormViewModel form);
-        Task<DamageReportFormViewModel?> GetDamageReportForEditAsync(Guid reportId);
-        Task EditDamageReportAsync(DamageReportFormViewModel form);
+        Task AddDamageReportAsync(DamageReportEditViewModel form);
+        Task<DamageReportEditViewModel?> GetDamageReportForEditAsync(Guid reportId);
+        Task EditDamageReportAsync(DamageReportEditViewModel form);
         Task RemoveDamageReportAsync(Guid reportId);
         Task<IEnumerable<DamageReportIndexViewModel>> GetAllCarsWithDamageReportsAsync();
     }
