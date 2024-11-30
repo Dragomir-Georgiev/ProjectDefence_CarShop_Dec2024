@@ -41,6 +41,8 @@ namespace CarShop.Common
         {
             public const int DescriptionMinLength = 50;
             public const int DescriptionMaxLength = 500;
+            public const string CostEstimationMinRange = "5";
+            public const string CostEstimationMaxRange = "200000";
         }
 
         public static class Discount
