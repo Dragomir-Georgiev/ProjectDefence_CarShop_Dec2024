@@ -4,7 +4,7 @@ using static CarShop.Common.EntityValidationConstants.DamageReport;
 
 namespace CarShop.Web.ViewModels.DamageReport
 {
-    public class DamageReportFormViewModel
+    public class DamageReportEditViewModel
     {
         public Guid Id { get; set; }
         public Guid CarId { get; set; }

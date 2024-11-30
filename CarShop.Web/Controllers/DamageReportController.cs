@@ -28,7 +28,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(DamageReportFormViewModel form)
+        public async Task<IActionResult> Index(DamageReportEditViewModel form)
         {
             if (!ModelState.IsValid)
             {
@@ -42,7 +42,7 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            DamageReportFormViewModel? viewModel = await _damageReportService.GetDamageReportForEditAsync(id);
+            DamageReportEditViewModel? viewModel = await _damageReportService.GetDamageReportForEditAsync(id);
             if (viewModel == null)
             {
                 return RedirectToAction("Index", new { carId = id });
@@ -52,7 +52,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DamageReportFormViewModel form)
+        public async Task<IActionResult> Edit(DamageReportEditViewModel form)
         {
             if (!ModelState.IsValid)
             {

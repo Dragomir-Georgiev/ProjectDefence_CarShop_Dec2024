@@ -1,5 +1,7 @@
 ﻿using CarShop.Data;
 using CarShop.Data.Models;
+using CarShop.Services.Data.Interfaces;
+using CarShop.Web.Infrastructure.Extensions;
 using CarShop.Web.ViewModels.Feedback;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,47 +12,26 @@ namespace CarShop.Web.Controllers
 {
     public class FeedbackController : BaseController
     {
-        private readonly ApplicationDbContext _context;
-        public FeedbackController(ApplicationDbContext context)
+        private readonly IFeedbackService _feedbackService;
+        public FeedbackController(IFeedbackService feedbackService)
         {
-            _context = context;
+            _feedbackService = feedbackService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(Guid carId)
         {
-            var validCar = await _context.Cars
-                .FirstOrDefaultAsync(c => c.Id == carId);
-            if (validCar == null)
-            {
-                return this.RedirectToAction("Index", "Car");
-            }
-
             var userId = GetCurrentUserId();
             if (userId == Guid.Empty)
             {
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var feedbacks = await _context.Feedbacks
-                .Where(f => f.CarId == carId)
-                .Select(f => new FeedbackViewModel()
-                {
-                    Id = f.Id,
-                    Comment = f.Comment,
-                    FeedbackDate = f.FeedbackDate,
-                    Rating = f.Rating,
-                    UserName = f.ApplicationUser.UserName ?? string.Empty,
-                    IsOwner = f.ApplicationUser.Id == userId,
-                })
-                .ToListAsync();
-
-            var viewModel = new IndexFeedbackViewModel()
+            var viewModel= await _feedbackService.GetFeedbacksByCarIdAsync(carId, userId);
+            if (viewModel == null)
             {
-                CarId = carId,
-                CarMakeModel = $"{validCar.Make} {validCar.Model}",
-                Feedbacks = feedbacks,
-            };
+                return this.RedirectToAction("Index", "Car");
+            }
 
             return View(viewModel);
         }
@@ -58,16 +39,15 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public IActionResult AddFeedback(Guid carId)
         {
-            var viewModel = new FeedbackFormViewModel
+            var viewModel = new AddFeedbackViewModel
             {
                 CarId = carId,
-                
             };
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFeedback(FeedbackFormViewModel viewModel)
+        public async Task<IActionResult> AddFeedback(AddFeedbackViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -80,17 +60,12 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var feedback = new Feedback()
+            bool result = await _feedbackService.AddFeedbackAsync(viewModel, userId);
+            if (result == false)
             {
-                Comment = viewModel.Comment,
-                FeedbackDate = DateTime.Now,
-                Rating = viewModel.Rating,
-                CarId = viewModel.CarId,
-                ApplicationUserId = userId,
-            };
-
-            await _context.Feedbacks.AddAsync(feedback);
-            await _context.SaveChangesAsync();
+                this.ModelState.AddModelError(nameof(viewModel.CarId),"Invalide car Id");
+                return this.RedirectToAction("Index", "Car");
+            }
 
             return RedirectToAction("Index", new { carId = viewModel.CarId });
         }
@@ -98,33 +73,24 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditFeedback(Guid id)
         {
-            var feedback = await _context.Feedbacks
-                .FirstOrDefaultAsync(f => f.Id == id);
-
             var userId = GetCurrentUserId();
             if (userId == Guid.Empty)
             {
                 return this.RedirectToAction("Index", "Car");
             }
 
-            if (feedback == null || feedback.ApplicationUserId != userId)
+            var viewModel = await _feedbackService.GetFeedbackForEditAsync(id, userId);
+            if (viewModel == null)
             {
-                return RedirectToAction("Index", new { carId = feedback!.CarId });
+                this.ModelState.AddModelError(nameof(viewModel.Id), "You do not have permission to edit this feedback.");
+                return this.RedirectToAction("Index", "Car");
             }
-
-            var viewModel = new FeedbackFormViewModel
-            {
-                Id = feedback.Id,
-                CarId = feedback.CarId,
-                Comment = feedback.Comment,
-                Rating = feedback.Rating
-            };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditFeedback(FeedbackFormViewModel form)
+        public async Task<IActionResult> EditFeedback(AddFeedbackViewModel form)
         {
             if (!ModelState.IsValid)
             {
@@ -136,18 +102,12 @@ namespace CarShop.Web.Controllers
             {
                 return this.RedirectToAction("Index", "Car");
             }
-
-            var feedback = await _context.Feedbacks
-                .FirstOrDefaultAsync(f => f.Id == form.Id && f.ApplicationUserId == userId);
-
-            if (feedback == null)
+            bool result = await _feedbackService.EditFeedbackAsync(form, userId);
+            if (result == false)
             {
-                return RedirectToAction("Index", new { carId = feedback!.CarId });
+                this.ModelState.AddModelError(nameof(form.Id), "You do not have permission to edit this feedback.");
+                return this.RedirectToAction("Index", "Car");
             }
-
-            feedback.Comment = form.Comment;
-            feedback.Rating = form.Rating;
-            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", new { carId = form.CarId });
         }
@@ -161,24 +121,20 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var feedback = await _context.Feedbacks
-                .FirstOrDefaultAsync(f => f.Id == id && f.ApplicationUserId == userId);
-
-            if (feedback == null)
+            bool result = await _feedbackService.RemoveFeedbackAsync(id, userId);
+            if (result == false)
             {
-                return RedirectToAction("Index", new { carId = feedback!.CarId });
+                this.ModelState.AddModelError(nameof(userId), "You do not have permission to edit this feedback.");
+                return this.RedirectToAction("Index", "Car");
             }
 
-            _context.Feedbacks.Remove(feedback);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index", new { carId = feedback.CarId });
+            return this.RedirectToAction("Index", "Car");
         }
 
         private Guid GetCurrentUserId()
         {
             Guid userGuidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(User.FindFirstValue(ClaimTypes.NameIdentifier), ref userGuidId);
+            bool isGuidValid = IsGuidValid(User.GetUserId(), ref userGuidId);
             if (!isGuidValid)
             {
                 return Guid.Empty;

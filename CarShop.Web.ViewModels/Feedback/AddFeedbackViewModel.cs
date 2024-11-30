@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarShop.Web.ViewModels.Feedback
 {
-    public class FeedbackFormViewModel
+    public class AddFeedbackViewModel
     {
         public Guid Id { get; set; }
         public Guid CarId { get; set; }
