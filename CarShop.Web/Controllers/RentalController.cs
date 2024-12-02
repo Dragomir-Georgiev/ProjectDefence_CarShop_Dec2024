@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using CarShop.Data.Models;
 using System.Security.Claims;
 using System.Collections.Specialized;
+using CarShop.Services.Data.Interfaces;
+using CarShop.Web.Infrastructure.Extensions;
 
 namespace CarShop.Web.Controllers
 {
     public class RentalController : BaseController
     {
-        private readonly ApplicationDbContext _context;
-        public RentalController(ApplicationDbContext context)
+        private readonly IRentalService _rentalService;
+        public RentalController(IRentalService rentalService)
         {
-            _context = context;
+            _rentalService = rentalService;
         }
         [HttpGet]
         public async Task<IActionResult> Index(string id)
@@ -25,33 +27,23 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var validCar = await _context.Cars
-                .FirstOrDefaultAsync(c => c.Id == carGuid);
-            if (validCar == null)
+            var viewModel = await _rentalService.GetRentalIndexAsync(carGuid);
+            if (viewModel == null)
             {
                 return this.RedirectToAction("Index", "Car");
             }
-
-            var viewModel = new IndexRentalViewModel()
-            {
-                CarId = id,
-                Make = validCar.Make,
-                Model = validCar.Model,
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(1),
-            };
 
             return View(viewModel);
         }
         [HttpPost]
         public IActionResult Index(IndexRentalViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("ConfirmRental", viewModel);
+                return View(viewModel);
             }
 
-            return View(viewModel);
+            return RedirectToAction("ConfirmRental", viewModel);
         }
 
         [HttpGet]
@@ -64,26 +56,11 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var validCar = await _context.Cars
-                .FirstOrDefaultAsync(c => c.Id == carGuid);
-            if (validCar == null)
+            var confirmViewModel = await _rentalService.GetConfirmRentalIndexAsync(viewModel, carGuid);
+            if (confirmViewModel == null)
             {
                 return this.RedirectToAction("Index", "Car");
             }
-
-            var totalRentDays = (viewModel.EndDate - viewModel.StartDate).Days + 1;
-            var totalCost = totalRentDays * validCar.PricePerDay;
-
-            var confirmViewModel = new ConfirmRentalViewModel()
-            {
-                CarId = viewModel.CarId,
-                Make = validCar.Make,
-                Model = validCar.Model,
-                CarImage = validCar.CarImage ?? "/images/default-car.png",
-                StartDate = viewModel.StartDate,
-                EndDate = viewModel.EndDate,
-                TotalCost = totalCost,
-            };
 
             return View(confirmViewModel);
         }
@@ -103,39 +80,18 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var validCar = await _context.Cars
-                .FirstOrDefaultAsync(c => c.Id == carGuid);
-            if (validCar == null)
-            {
-                return this.RedirectToAction("Index", "Car");
-            }
-
             var userId = GetCurrentUserId();
             if (userId == Guid.Empty)
             {
                 return this.RedirectToAction("Index", "Car");
             }
 
-            validCar.IsAvailable = false;
-
-            var rental = new Rental()
+            bool result = await _rentalService.AddRentalAsync(viewModel, userId, carGuid);
+            if (result == false)
             {
-                Id = Guid.NewGuid(),
-                CarId = carGuid,
-                StartDate = viewModel.StartDate,
-                EndDate = viewModel.EndDate,
-                TotalCost = viewModel.TotalCost
-            };
-
-            rental.ApplicationUserRentals.Add(new ApplicationUserRental()
-            {
-                ApplicationUserId = userId,
-                RentalId = rental.Id
-            });
-
-            await _context.Rentals.AddAsync(rental);
-            await _context.SaveChangesAsync();
-
+                this.ModelState.AddModelError(nameof(viewModel.CarId), "Invalide car Id");
+                return this.RedirectToAction("Index", "Car");
+            }
             return RedirectToAction(nameof(RentedCars));
         }
 
@@ -148,22 +104,7 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var rentedCars = await _context.Rentals
-                .Where(r => r.ApplicationUserRentals.Any(ur => ur.ApplicationUserId == userId))
-                .Include(r => r.Car)
-                .Select(r => new RentedCarViewModel()
-                {
-                    RentalId = r.Id,
-                    Make = r.Car.Make,
-                    Model = r.Car.Model,
-                    StartDate = r.StartDate,
-                    EndDate = r.EndDate,
-                    TotalCost = r.TotalCost,
-                    CarImage = r.Car.CarImage ?? "/images/default-car.png"
-                })
-                .AsNoTracking()
-                .ToListAsync();
-
+            var rentedCars = await _rentalService.GetRentedCarsAsync(userId);
             return View(rentedCars);
         }
 
@@ -176,39 +117,20 @@ namespace CarShop.Web.Controllers
                 return this.RedirectToAction("Index", "Car");
             }
 
-            var rental = await _context.Rentals
-                .Include(r => r.Car)
-                .FirstOrDefaultAsync(r => r.Id == rentalId);
-
-            if (rental == null) 
+            bool result = await _rentalService.RemoveRentalAsync(rentalId, userId);
+            if (result == false) 
             {
-                return RedirectToAction(nameof(RentedCars));
+                this.ModelState.AddModelError(nameof(userId), "You do not have permission to remove this rental.");
+                return this.RedirectToAction("Index", "Car");
             }
-
-            var userRental = await _context.ApplicationsUsersRentals
-                .FirstOrDefaultAsync(r => r.RentalId == rentalId);
-
-            if (userRental == null)
-            {
-                return RedirectToAction(nameof(RentedCars));
-            }
-
-            //TODO check if the car has any damage reports before making it available
-
-            rental.Car.IsAvailable = true;
-
-            _context.ApplicationsUsersRentals.Remove(userRental);
-            _context.Rentals.Remove(rental);
-            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(RentedCars));
         }
 
-
         private Guid GetCurrentUserId()
         {
             Guid userGuidId = Guid.Empty;
-            bool isGuidValid = IsGuidValid(User.FindFirstValue(ClaimTypes.NameIdentifier), ref userGuidId);
+            bool isGuidValid = IsGuidValid(User.GetUserId(), ref userGuidId);
             if (!isGuidValid)
             {
                 return Guid.Empty;

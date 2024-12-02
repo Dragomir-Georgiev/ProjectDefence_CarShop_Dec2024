@@ -10,6 +10,7 @@ using NuGet.Protocol.Core.Types;
 using CarShop.Web.Infrastructure.Extensions;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Services.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CarShop.Web
 {
@@ -38,6 +39,7 @@ namespace CarShop.Web
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices(typeof(ICarService).Assembly);
+
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
