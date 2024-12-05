@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using static CarShop.Common.ApplicationConstants
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,12 +27,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Index">Cars</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Rental" asp-action="RentedCars">Rented Cars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DamageReport" asp-action="All">Damage reports</a>
-                        </li>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Rental" asp-action="RentedCars">Rented Cars</a>
+                            </li>
+                        }
+                        @if (User!.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DamageReport" asp-action="All">Damage reports</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
