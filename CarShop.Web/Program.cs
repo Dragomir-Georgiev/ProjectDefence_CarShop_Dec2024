@@ -11,6 +11,8 @@ using CarShop.Web.Infrastructure.Extensions;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Services.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Storage;
+using CinemaApp.Data.Configuration;
 
 namespace CarShop.Web
 {
@@ -22,6 +24,9 @@ namespace CarShop.Web
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
+            string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username")!;
+            string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -46,6 +51,13 @@ namespace CarShop.Web
 
             WebApplication app = builder.Build();
 
+            using (var scope = app.Services.CreateScope()) 
+            { 
+                var services = scope.ServiceProvider;
+
+                DatabaseSeeder.SeedRoles(services);
+            }
+
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
@@ -68,6 +80,11 @@ namespace CarShop.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+
+            app.MapControllerRoute(
+                name: "Areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
