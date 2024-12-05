@@ -11,6 +11,8 @@ using CarShop.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CarShop.Web.ViewModels.CarCategories;
 using CarShop.Services.Data;
+using Microsoft.AspNetCore.Authorization;
+using static CarShop.Common.ApplicationConstants;
 
 namespace CarShop.Web.Controllers
 {
@@ -26,17 +28,19 @@ namespace CarShop.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<AllCarsIndexViewModel> cars = 
-                await _carService.IndexGetAllAsync(); 
+            IEnumerable<AllCarsIndexViewModel> cars =
+                await _carService.IndexGetAllAsync();
             return View(cars);
         }
         [HttpGet]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> Add()
         {
             AddCarViewModel model = await _carService.GetCarCategoriesAsync();
             return View(model);
         }
         [HttpPost]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> Add(AddCarViewModel carModel)
         {
             if (!ModelState.IsValid)
@@ -72,6 +76,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> Edit(string? id)
         {
             Guid carGuid = Guid.Empty;
@@ -91,9 +96,9 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> Edit(EditCarViewModel carModel, string? id)
         {
-            //TODO: Make a CarCategory Service to load the categories through it and not through the Car ViewModels. Change here and in the add action
             if (!ModelState.IsValid)
             {
                 carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
@@ -114,6 +119,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> Delete(string id)
         {
             Guid carGuid = Guid.Empty;
@@ -134,6 +140,7 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
         public async Task<IActionResult> DeleteConfirmed(DeleteCarViewModel carModel)
         {
             Guid carGuid = Guid.Empty;

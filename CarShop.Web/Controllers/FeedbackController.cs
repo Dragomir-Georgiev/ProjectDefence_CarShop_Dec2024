@@ -3,6 +3,7 @@ using CarShop.Data.Models;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Web.Infrastructure.Extensions;
 using CarShop.Web.ViewModels.Feedback;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Security.Claims;
 
 namespace CarShop.Web.Controllers
 {
+    [Authorize]
     public class FeedbackController : BaseController
     {
         private readonly IFeedbackService _feedbackService;

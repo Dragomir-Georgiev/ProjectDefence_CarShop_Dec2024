@@ -7,9 +7,11 @@ using System.Security.Claims;
 using System.Collections.Specialized;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Web.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarShop.Web.Controllers
 {
+    [Authorize]
     public class RentalController : BaseController
     {
         private readonly IRentalService _rentalService;

@@ -2,11 +2,14 @@
 using CarShop.Data.Models;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Web.ViewModels.DamageReport;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static CarShop.Common.ApplicationConstants;
 
 namespace CarShop.Web.Controllers
 {
+    [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
     public class DamageReportController : BaseController
     {
         private readonly IDamageReportService _damageReportService;
