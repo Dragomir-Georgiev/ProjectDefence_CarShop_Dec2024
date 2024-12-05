@@ -1,12 +1,16 @@
 ﻿@using CarShop.Web.ViewModels.Car
 @model IEnumerable<AllCarsIndexViewModel>
+@using static CarShop.Common.ApplicationConstants;
 @{
     ViewData["Title"] = "All Cars";
 }
 <h1>Cars</h1>
-<p>
-    <a asp-action="Add" class="btn btn-primary">Add New Car</a>
-</p>
+@if (User.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
+{
+    <p>
+        <a asp-action="Add" class="btn btn-primary">Add New Car</a>
+    </p>
+}
 <div class="row">
     @foreach (var car in Model)
     {
@@ -24,15 +28,21 @@
                 </div>
                 <div class="card-footer">
                     <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
-                    <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
-                    @if (car.IsAvailable)
+                    @if (User!.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
                     {
-                        <a asp-action="Index" asp-controller="Rental" asp-route-id="@car.Id" class="btn btn-primary btn-sm">Rent</a>
+                        <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
                     }
-                    else
+                    @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <button class="btn btn-info btn-sm" disabled>Not Available</button>
+                        @if (car.IsAvailable)
+                        {
+                            <a asp-action="Index" asp-controller="Rental" asp-route-id="@car.Id" class="btn btn-primary btn-sm">Rent</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-info btn-sm" disabled>Not Available</button>
+                        }
                     }
                 </div>
             </div>
