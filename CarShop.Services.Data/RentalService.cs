@@ -66,7 +66,7 @@ namespace CarShop.Services.Data
                 CarId = viewModel.CarId,
                 Make = validCar.Make,
                 Model = validCar.Model,
-                CarImage = validCar.CarImage ?? "/images/default-car.png",
+                CarImage = validCar.CarImage ?? "/images/no-car-img.jpg",
                 StartDate = viewModel.StartDate,
                 EndDate = viewModel.EndDate,
                 TotalCost = totalCost,
@@ -117,7 +117,7 @@ namespace CarShop.Services.Data
                     StartDate = r.StartDate,
                     EndDate = r.EndDate,
                     TotalCost = r.TotalCost,
-                    CarImage = r.Car.CarImage ?? "/images/default-car.png"
+                    CarImage = r.Car.CarImage ?? "/images/no-car-img.jpg"
                 })
                 .AsNoTracking()
                 .ToListAsync();

@@ -18,10 +18,25 @@ namespace CarShop.Web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int? statusCode = null)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (!statusCode.HasValue)
+            {
+                return View();
+            }
+            if (statusCode == 404)
+            {
+                return this.View("Error404");
+            }
+
+            return this.View("Error500");
         }
+        /* Uncomment this if you want to simulate a 500 error. 
+         * Just run the app and navigate to https://localhost:7279/simulate-500-direct. !!Make sure to change the localhost to yours!!
+        [Route("simulate-500-direct")]
+        public IActionResult Simulate500Direct()
+        {
+            return this.View("Error500");
+        }*/
     }
 }
