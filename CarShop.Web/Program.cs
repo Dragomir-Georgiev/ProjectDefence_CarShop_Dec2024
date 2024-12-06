@@ -13,6 +13,7 @@ using CarShop.Services.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Storage;
 using CinemaApp.Data.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarShop.Web
 {
@@ -45,7 +46,12 @@ namespace CarShop.Web
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.RegisterUserDefinedServices(typeof(ICarService).Assembly);
 
-            builder.Services.AddControllersWithViews();
+			builder.Services.AddControllersWithViews(cfg =>
+			{
+				cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+			});
+
+			builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
