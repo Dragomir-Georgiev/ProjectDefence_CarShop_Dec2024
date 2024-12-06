@@ -16,143 +16,154 @@ using static CarShop.Common.ApplicationConstants;
 
 namespace CarShop.Web.Controllers
 {
-    public class CarController : BaseController
-    {
-        private readonly ICarService _carService;
-        private readonly ICarCategoryService _carCategotyService;
-        public CarController(ApplicationDbContext context, ICarService carService, ICarCategoryService carCategotyService)
-        {
-            _carService = carService;
-            _carCategotyService = carCategotyService;
-        }
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            IEnumerable<AllCarsIndexViewModel> cars =
-                await _carService.IndexGetAllAsync();
-            return View(cars);
-        }
-        [HttpGet]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> Add()
-        {
-            AddCarViewModel model = await _carService.GetCarCategoriesAsync();
-            return View(model);
-        }
-        [HttpPost]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> Add(AddCarViewModel carModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                carModel.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
-                return View(carModel);
-            }
-            
-            await _carService.AddCarAsync(carModel);
+	public class CarController : BaseController
+	{
+		private readonly ICarService _carService;
+		private readonly ICarCategoryService _carCategotyService;
+		public CarController(ApplicationDbContext context, ICarService carService, ICarCategoryService carCategotyService)
+		{
+			_carService = carService;
+			_carCategotyService = carCategotyService;
+		}
+		[HttpGet]
+		public async Task<IActionResult> Index(AllCarSearchFilterViewModel inputModel)
+		{
+			IEnumerable<AllCarsIndexViewModel> cars =
+				await _carService.IndexGetAllAsync(inputModel);
+			int allCarsCount = await _carService.GetCarsCountByFilterAsync(inputModel);
+			AllCarSearchFilterViewModel viewModel = new AllCarSearchFilterViewModel()
+			{
+				Cars = cars,
+				SearchQuery = inputModel.SearchQuery,
+			    PriceFilter = inputModel.PriceFilter,
+				CurrentPage = inputModel.CurrentPage,
+				TotalPages = (int)Math.Ceiling((double)allCarsCount /
+											   inputModel.EntitiesPerPage!.Value)
+			};
 
-            return RedirectToAction(nameof(Index));
-        }
+			return View(viewModel);
+		}
+		[HttpGet]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> Add()
+		{
+			AddCarViewModel model = await _carService.GetCarCategoriesAsync();
+			return View(model);
+		}
+		[HttpPost]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> Add(AddCarViewModel carModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				carModel.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
+				return View(carModel);
+			}
 
-        [HttpGet]
-        public async Task<IActionResult> Details(string? id)
-        {
-            Guid carGuid = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref carGuid);
-            if (!isGuidValid)
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
+			await _carService.AddCarAsync(carModel);
 
-            CarDetailsViewModel? viewModel = await 
-                _carService.GetCarDetailsByIdAsync(carGuid);
+			return RedirectToAction(nameof(Index));
+		}
 
-            if (viewModel == null)
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
+		[HttpGet]
+		public async Task<IActionResult> Details(string? id)
+		{
+			Guid carGuid = Guid.Empty;
+			bool isGuidValid = IsGuidValid(id, ref carGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
 
-            return this.View(viewModel);
-        }
+			CarDetailsViewModel? viewModel = await
+				_carService.GetCarDetailsByIdAsync(carGuid);
 
-        [HttpGet]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> Edit(string? id)
-        {
-            Guid carGuid = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref carGuid);
-            if (!isGuidValid)
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
-            var model = await _carService.GetEditCarModelAsync(carGuid);
+			if (viewModel == null)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
 
-            if (model == null)
-            {
-                return BadRequest();
-            }
+			return this.View(viewModel);
+		}
 
-            return View(model);
-        }
+		[HttpGet]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> Edit(string? id)
+		{
+			Guid carGuid = Guid.Empty;
+			bool isGuidValid = IsGuidValid(id, ref carGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+			var model = await _carService.GetEditCarModelAsync(carGuid);
 
-        [HttpPost]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> Edit(EditCarViewModel carModel, string? id)
-        {
-            if (!ModelState.IsValid)
-            {
-                carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
-                return View(carModel);
-            }
+			if (model == null)
+			{
+				return BadRequest();
+			}
 
-            Guid carGuid = Guid.Empty;
-            bool isGuidValid =  IsGuidValid(id, ref carGuid);
-            if (!isGuidValid)
-            {
-                carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
-                return View(carModel);
-            }
+			return View(model);
+		}
 
-            await _carService.UpdateCarAsync(carGuid, carModel);
+		[HttpPost]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> Edit(EditCarViewModel carModel, string? id)
+		{
+			if (!ModelState.IsValid)
+			{
+				carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
+				return View(carModel);
+			}
 
-            return RedirectToAction(nameof(Index));
-        }
+			Guid carGuid = Guid.Empty;
+			bool isGuidValid = IsGuidValid(id, ref carGuid);
+			if (!isGuidValid)
+			{
+				carModel!.CarCategories = await _carCategotyService.GetCarCategoriesAsync();
+				return View(carModel);
+			}
 
-        [HttpGet]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            Guid carGuid = Guid.Empty;
-            bool isGuidValid = IsGuidValid(id, ref carGuid);
-            if (!isGuidValid)
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
+			await _carService.UpdateCarAsync(carGuid, carModel);
 
-            DeleteCarViewModel? carViewModel = await _carService.GetDeleteCarModelAsync(carGuid);
+			return RedirectToAction(nameof(Index));
+		}
 
-            if (carViewModel == null) 
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
+		[HttpGet]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> Delete(string id)
+		{
+			Guid carGuid = Guid.Empty;
+			bool isGuidValid = IsGuidValid(id, ref carGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
 
-            return View(carViewModel);
-        }
+			DeleteCarViewModel? carViewModel = await _carService.GetDeleteCarModelAsync(carGuid);
 
-        [HttpPost]
-        [Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
-        public async Task<IActionResult> DeleteConfirmed(DeleteCarViewModel carModel)
-        {
-            Guid carGuid = Guid.Empty;
-            bool isGuidValid = IsGuidValid(carModel.Id, ref carGuid);
-            if (!isGuidValid)
-            {
-                return this.RedirectToAction(nameof(Index));
-            }
+			if (carViewModel == null)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
 
-            await _carService.SoftDeleteCarAsync(carGuid);
+			return View(carViewModel);
+		}
 
-            return this.RedirectToAction(nameof(Index));
-        }
-    }
+		[HttpPost]
+		[Authorize(Roles = $"{ManagerRoleName},{AdminRoleName}")]
+		public async Task<IActionResult> DeleteConfirmed(DeleteCarViewModel carModel)
+		{
+			Guid carGuid = Guid.Empty;
+			bool isGuidValid = IsGuidValid(carModel.Id, ref carGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+
+			await _carService.SoftDeleteCarAsync(carGuid);
+
+			return this.RedirectToAction(nameof(Index));
+		}
+	}
 }

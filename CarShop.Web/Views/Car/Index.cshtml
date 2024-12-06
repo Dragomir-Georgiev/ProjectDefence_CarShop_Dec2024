@@ -1,51 +1,111 @@
 ﻿@using CarShop.Web.ViewModels.Car
-@model IEnumerable<AllCarsIndexViewModel>
+@model AllCarSearchFilterViewModel
 @using static CarShop.Common.ApplicationConstants;
 @{
-    ViewData["Title"] = "All Cars";
+	ViewData["Title"] = "All Cars";
 }
 <h1>Cars</h1>
 @if (User.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
 {
-    <p>
-        <a asp-action="Add" class="btn btn-primary">Add New Car</a>
-    </p>
+	<p>
+		<a asp-action="Add" class="btn btn-primary">Add New Car</a>
+	</p>
 }
+
+<form method="get" asp-action="Index" class="mb-4">
+	<div class="row">
+		<div class="col">
+			<label asp-for="SearchQuery" class="control-label">Search by car make...</label>
+			<input asp-for="SearchQuery" class="form-control"/>
+		</div>
+
+		<div class="col">
+			<label asp-for="PriceFilter" class="control-label">Min price...</label>
+			<input asp-for="PriceFilter" class="form-control" placeholder="00.00"/>
+			<span asp-validation-for="PriceFilter" class="text-danger"></span>
+		</div>
+		<div class="col d-flex align-items-end">
+			<button type="submit" class="btn btn-primary">Filter</button>
+		</div>
+	</div>
+</form>
+
 <div class="row">
-    @foreach (var car in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="@(!string.IsNullOrEmpty(car.CarImage) ? car.CarImage : "/images/no-car-img.jpg")"
-                     class="card-img-top"
-                     alt="Car Image"
-                     style="width: 100%; height: 200px; object-fit: cover;" />
-                <div class="card-body">
-                    <h5 class="card-title">@car.Make @car.Model</h5>
-                    <p class="card-text">
-                        <strong>Price Per Day:</strong> @car.PricePerDay.ToString("C")<br />
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
-                    @if (User!.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
-                    {
-                        <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
-                    }
-                    @if (User?.Identity?.IsAuthenticated ?? false)
-                    {
-                        @if (car.IsAvailable)
-                        {
-                            <a asp-action="Index" asp-controller="Rental" asp-route-id="@car.Id" class="btn btn-primary btn-sm">Rent</a>
-                        }
-                        else
-                        {
-                            <button class="btn btn-info btn-sm" disabled>Not Available</button>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    }
+	@if (Model.Cars != null)
+	{
+		@foreach (var car in Model.Cars)
+		{
+			<div class="col-md-4 mb-4">
+				<div class="card h-100">
+					<img src="@(!string.IsNullOrEmpty(car.CarImage) ? car.CarImage : "/images/no-car-img.jpg")"
+						 class="card-img-top"
+						 alt="Car Image"
+						 style="width: 100%; height: 200px; object-fit: cover;" />
+					<div class="card-body">
+						<h5 class="card-title">@car.Make @car.Model</h5>
+						<p class="card-text">
+							<strong>Price Per Day:</strong> @car.PricePerDay.ToString("C")<br />
+						</p>
+					</div>
+					<div class="card-footer">
+						<a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
+						@if (User!.IsInRole(AdminRoleName) || User.IsInRole(ManagerRoleName))
+						{
+							<a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Edit</a>
+							<a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
+						}
+						@if (User?.Identity?.IsAuthenticated ?? false)
+						{
+							@if (car.IsAvailable)
+							{
+								<a asp-action="Index" asp-controller="Rental" asp-route-id="@car.Id" class="btn btn-primary btn-sm">Rent</a>
+							}
+							else
+							{
+								<button class="btn btn-info btn-sm" disabled>Not Available</button>
+							}
+						}
+					</div>
+				</div>
+			</div>
+		}
+	}
 </div>
+
+<nav aria-label="Page navigation" class="mt-4">
+	<ul class="pagination">
+		@if (Model.CurrentPage > 1)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage - 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-priceFilter="@Model.PriceFilter">
+					Previous
+				</a>
+			</li>
+		}
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@i"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-priceFilter="@Model.PriceFilter">
+					@i
+				</a>
+			</li>
+		}
+		@if (Model.CurrentPage < Model.TotalPages)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage + 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-priceFilter="@Model.PriceFilter">
+					Next
+				</a>
+			</li>
+		}
+	</ul>
+</nav>

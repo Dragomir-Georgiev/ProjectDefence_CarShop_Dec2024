@@ -6,7 +6,7 @@ namespace CarShop.Services.Data.Interfaces
 {
     public interface ICarService
     {
-        Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync();
+        Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync(AllCarSearchFilterViewModel inputModel);
 
         Task<AddCarViewModel> GetCarCategoriesAsync();
 
@@ -21,5 +21,7 @@ namespace CarShop.Services.Data.Interfaces
         Task<DeleteCarViewModel?> GetDeleteCarModelAsync(Guid id);
 
         Task SoftDeleteCarAsync(Guid id);
-    }
+
+        Task<int> GetCarsCountByFilterAsync(AllCarSearchFilterViewModel inputModel);
+	}
 }

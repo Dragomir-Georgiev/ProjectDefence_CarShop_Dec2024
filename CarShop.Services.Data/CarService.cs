@@ -7,6 +7,7 @@ using CarShop.Web.ViewModels.CarCategories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CarShop.Services.Data
@@ -22,16 +23,36 @@ namespace CarShop.Services.Data
             _carRepository = carRepository;
             _carCategoryService = carCategoryService;
         }
-        public async Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync()
+        public async Task<IEnumerable<AllCarsIndexViewModel>> IndexGetAllAsync(AllCarSearchFilterViewModel inputModel)
         {
-            IEnumerable<AllCarsIndexViewModel> cars = await _carRepository
+            IQueryable<Car> allCarsQuery = _carRepository
                 .GetAllAttached()
-                .Where(c => c.IsDeleted == false)
+                .Where(c => c.IsDeleted == false);
+
+
+			if (!String.IsNullOrWhiteSpace(inputModel.SearchQuery))
+			{
+				allCarsQuery = allCarsQuery
+					.Where(c => c.Make.ToLower().Contains(inputModel.SearchQuery.ToLower()));
+			}
+			if (inputModel.PriceFilter != null)
+			{
+				allCarsQuery = allCarsQuery
+					.Where(c => c.PricePerDay >= inputModel.PriceFilter);
+			}
+
+			if (inputModel.CurrentPage.HasValue &&
+				inputModel.EntitiesPerPage.HasValue)
+			{
+				allCarsQuery = allCarsQuery
+					.Skip(inputModel.EntitiesPerPage.Value * (inputModel.CurrentPage.Value - 1))
+					.Take(inputModel.EntitiesPerPage.Value);
+			}
+
+			return await allCarsQuery
                 .To<AllCarsIndexViewModel>()
                 .AsNoTracking()
                 .ToListAsync();
-
-            return cars;
         }
 
         public async Task<AddCarViewModel> GetCarCategoriesAsync()
@@ -137,5 +158,19 @@ namespace CarShop.Services.Data
                 await _carRepository.SaveChangesAsync();
             }
         }
-    }
+
+        public async Task<int> GetCarsCountByFilterAsync(AllCarSearchFilterViewModel inputModel)
+		{
+			AllCarSearchFilterViewModel inputModelCopy = new AllCarSearchFilterViewModel()
+			{
+				CurrentPage = null,
+				EntitiesPerPage = null,
+				SearchQuery = inputModel.SearchQuery,
+				PriceFilter = inputModel.PriceFilter,
+			};
+			int moviesCount = (await this.IndexGetAllAsync(inputModelCopy))
+				.Count();
+			return moviesCount;
+		}
+	}
 }

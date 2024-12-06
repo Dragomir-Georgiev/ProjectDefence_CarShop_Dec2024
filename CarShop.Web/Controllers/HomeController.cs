@@ -32,7 +32,7 @@ namespace CarShop.Web.Controllers
             return this.View("Error500");
         }
         /* Uncomment this if you want to simulate a 500 error. 
-         * Just run the app and navigate to https://localhost:7279/simulate-500-direct. !!Make sure to change the localhost to yours!!
+         Just run the app and navigate to https://localhost:7279/simulate-500-direct. !!Make sure to change the localhost to yours!!
         [Route("simulate-500-direct")]
         public IActionResult Simulate500Direct()
         {
