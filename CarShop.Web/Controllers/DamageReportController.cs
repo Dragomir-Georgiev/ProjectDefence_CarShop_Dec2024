@@ -68,7 +68,6 @@ namespace CarShop.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(Guid id)
         {
             await _damageReportService.RemoveDamageReportAsync(id);
