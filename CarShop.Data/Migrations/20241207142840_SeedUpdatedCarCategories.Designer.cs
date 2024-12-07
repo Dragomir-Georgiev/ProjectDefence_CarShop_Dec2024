@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207142840_SeedUpdatedCarCategories")]
+    partial class SeedUpdatedCarCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,56 +89,6 @@ namespace CarShop.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe7bbe36-c399-457d-b1fc-80795f18d21e",
-                            Email = "testuser123@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TESTUSER123@GMAIL.COM",
-                            NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENcvZLOefZKauKiPlSPEpZg8ZNDmtFdPme0BR2dhr9EIQytLmJnQiJSRj+PlEO2Whg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4d45d2c7-303a-4c30-83a2-f726a3f9300e",
-                            TwoFactorEnabled = false,
-                            UserName = "User"
-                        },
-                        new
-                        {
-                            Id = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "026d0069-7684-4ee3-8c78-ad7cb01cf592",
-                            Email = "dragomir@yahoo.ca",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "DRAGOMIR@YAHOO.CA",
-                            NormalizedUserName = "DRAGOMIR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEaFHFR7hITk+DNK1Vvd6uy7EOku9wsh34HxAWGyHaHD707V02mVarru2zefQ/CeKA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "8f673bbb-bbb6-48df-8a5e-f4f8b4740fa3",
-                            TwoFactorEnabled = false,
-                            UserName = "Dragomir"
-                        },
-                        new
-                        {
-                            Id = new Guid("49317ff2-5aac-426d-a8bd-d4bee288c776"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1dbcbe5-0d5f-4458-b9d5-6957831a01e1",
-                            Email = "admin@example.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "АDMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFHz1zTlayA5TE4aKcLi6SZmrKJmTkAkB7FroHMdswKrRsfxH3H5FFjIo3CZHcj35A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3d679fcb-5ac8-401f-ac2f-48f6668b7f5a",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.ApplicationUserRental", b =>
@@ -153,23 +106,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("RentalId");
 
                     b.ToTable("ApplicationsUsersRentals");
-
-                    b.HasData(
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("dcf823b4-33f9-4102-a63d-ae28ee7e7708")
-                        },
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("d58bf2b1-b3b1-4f63-9603-05ba7ad3e6f7")
-                        },
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("d599bce1-6c7a-401a-9a5b-d10e0736e3d8")
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Car", b =>
@@ -244,260 +180,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarCategoryId");
 
                     b.ToTable("Cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4590f15d-634b-4a10-9f69-32a88931922f"),
-                            CarCategoryId = new Guid("264e1f65-36e4-44fb-9605-64bec9b9ed7a"),
-                            CarImage = "https://r44performance.com/cdn/shop/articles/R44Performance-Porsche-911-GT3RS.jpg?v=1710775245&width=1500",
-                            DoorsCount = 2,
-                            FuelConsumption = 13.800000000000001,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "Porsche",
-                            MaximumSpeed = 311,
-                            Model = "911",
-                            PricePerDay = 1135.46m,
-                            ProductionYear = 2024,
-                            SeatingCapacity = 2,
-                            TankVolume = 64.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("e3ea8915-979c-478f-b597-4b50e5f31cfd"),
-                            CarCategoryId = new Guid("9c8e3ead-80a2-45c6-afba-91248baebef3"),
-                            CarImage = "https://images.pistonheads.com/nimg/48142/blobid0.jpg",
-                            DoorsCount = 2,
-                            FuelConsumption = 12.199999999999999,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "McLaren",
-                            MaximumSpeed = 332,
-                            Model = "750S Spider",
-                            PricePerDay = 1797.90m,
-                            ProductionYear = 2023,
-                            SeatingCapacity = 2,
-                            TankVolume = 72.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("eea3a59b-1d08-47d5-82f5-863384b9df71"),
-                            CarCategoryId = new Guid("a69fe7ac-6ad4-403f-ba76-eefbc3a691c6"),
-                            CarImage = "https://www.ramtrucks.com/content/dam/fca-brands/na/ramtrucks/en_us/2025/ram-1500/gallery/desktop/my25-ram-1500-gallery-open-1-d.jpg",
-                            DoorsCount = 4,
-                            FuelConsumption = 15.699999999999999,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "RAM",
-                            MaximumSpeed = 190,
-                            Model = "1500",
-                            PricePerDay = 317.28m,
-                            ProductionYear = 2024,
-                            SeatingCapacity = 6,
-                            TankVolume = 125.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("3f821603-c82c-4b46-bc94-8a246e5ca4c1"),
-                            CarCategoryId = new Guid("efdd48c4-fa58-48d9-8b86-0b9c3f0d64a6"),
-                            CarImage = "https://www.auto-data.net/images/f46/Dodge-Caravan-V-facelift-2011.jpg",
-                            DoorsCount = 5,
-                            FuelConsumption = 13.800000000000001,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "Dodge",
-                            MaximumSpeed = 220,
-                            Model = "Caravan",
-                            PricePerDay = 31.78m,
-                            ProductionYear = 2011,
-                            SeatingCapacity = 7,
-                            TankVolume = 76.0,
-                            TransmissionType = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            CarCategoryId = new Guid("df2cdc1f-46c7-428b-a54b-e03eb0e33a7f"),
-                            CarImage = "https://www.motortrend.com/uploads/2022/03/2022-Mazda-Mazda3-Sedan-AWD-Turbo-29.jpg",
-                            DoorsCount = 4,
-                            FuelConsumption = 8.4000000000000004,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "Mazda",
-                            MaximumSpeed = 204,
-                            Model = "3",
-                            PricePerDay = 30m,
-                            ProductionYear = 2022,
-                            SeatingCapacity = 5,
-                            TankVolume = 50.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("8326b7a1-6a93-46c4-89eb-d1a50330e3b6"),
-                            CarCategoryId = new Guid("91ac82e0-9aa7-4d53-bba4-cd8128c0b629"),
-                            CarImage = "https://www.thedrive.com/wp-content/uploads/2022/06/21/DSC00241.jpg?quality=85",
-                            DoorsCount = 5,
-                            FuelConsumption = 8.6999999999999993,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Mazda",
-                            MaximumSpeed = 204,
-                            Model = "3",
-                            PricePerDay = 35m,
-                            ProductionYear = 2022,
-                            SeatingCapacity = 5,
-                            TankVolume = 50.0,
-                            TransmissionType = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("e5a47d2a-68fe-4156-8f70-21072e04eb77"),
-                            CarCategoryId = new Guid("5e5b45b5-6bce-4e8c-a05a-eb6d5540f9ce"),
-                            CarImage = "https://manuals.plus/wp-content/uploads/2022/03/HONDA-2022-CR-V-FEATURD3.jpg",
-                            DoorsCount = 5,
-                            FuelConsumption = 5.9000000000000004,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Honda",
-                            MaximumSpeed = 190,
-                            Model = "CR-V",
-                            PricePerDay = 37m,
-                            ProductionYear = 2022,
-                            SeatingCapacity = 5,
-                            TankVolume = 53.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("cbc0f0df-2fbf-4d87-ab77-c214efa3e363"),
-                            CarCategoryId = new Guid("8e86c12d-4d99-4c26-be13-befca7323ab3"),
-                            CarImage = "https://www.auto-data.net/images/f24/file8561751.jpg",
-                            DoorsCount = 2,
-                            FuelConsumption = 7.0,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "Audi",
-                            MaximumSpeed = 250,
-                            Model = "A5",
-                            PricePerDay = 430.39m,
-                            ProductionYear = 2019,
-                            SeatingCapacity = 4,
-                            TankVolume = 58.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("0f3815d0-37b0-440d-978f-22fe3d9416cc"),
-                            CarCategoryId = new Guid("47b3ba7c-8aaa-450d-bf9f-847106fc8e02"),
-                            CarImage = "https://www.passportbmw.com/blogs/846/wp-content/uploads/2022/09/P90479453__mid.jpeg",
-                            DoorsCount = 2,
-                            FuelConsumption = 7.9000000000000004,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "BMW",
-                            MaximumSpeed = 250,
-                            Model = "Z4",
-                            PricePerDay = 72m,
-                            ProductionYear = 2024,
-                            SeatingCapacity = 2,
-                            TankVolume = 52.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("41f5527c-c52b-409c-a6e8-74e8f6497c80"),
-                            CarCategoryId = new Guid("df2cdc1f-46c7-428b-a54b-e03eb0e33a7f"),
-                            CarImage = "",
-                            DoorsCount = 4,
-                            FuelConsumption = 5.8099999999999996,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Toyota",
-                            MaximumSpeed = 205,
-                            Model = "Camry",
-                            PricePerDay = 54m,
-                            ProductionYear = 2023,
-                            SeatingCapacity = 5,
-                            TankVolume = 60.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("04f4c07e-045d-457e-af60-b0397cf81225"),
-                            CarCategoryId = new Guid("91ac82e0-9aa7-4d53-bba4-cd8128c0b629"),
-                            CarImage = "",
-                            DoorsCount = 5,
-                            FuelConsumption = 8.4000000000000004,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Honda",
-                            MaximumSpeed = 270,
-                            Model = "Civic Type R",
-                            PricePerDay = 0m,
-                            ProductionYear = 2020,
-                            SeatingCapacity = 4,
-                            TankVolume = 46.0,
-                            TransmissionType = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("77b5fe3d-be73-4089-8512-b6665370a2ec"),
-                            CarCategoryId = new Guid("264e1f65-36e4-44fb-9605-64bec9b9ed7a"),
-                            CarImage = "https://s3-ap-southeast-1.amazonaws.com/subaru.asia-cms/articles/logo_1b697b9c5550ddceb41469d84a27d60a.jpg",
-                            DoorsCount = 2,
-                            FuelConsumption = 9.5,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Subaru",
-                            MaximumSpeed = 226,
-                            Model = "BRZ",
-                            PricePerDay = 45m,
-                            ProductionYear = 2021,
-                            SeatingCapacity = 4,
-                            TankVolume = 50.0,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("ba7f77e9-e054-4ec9-8f11-2d7346ea80b5"),
-                            CarCategoryId = new Guid("a69fe7ac-6ad4-403f-ba76-eefbc3a691c6"),
-                            CarImage = "https://dealerinspire-image-library-prod.s3.us-east-1.amazonaws.com/images/G91FpK6If8GqdDPnNyDDqhHR8SEG2pb5lVb3ghli.jpeg",
-                            DoorsCount = 4,
-                            FuelConsumption = 14.699999999999999,
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Make = "Chevrolet",
-                            MaximumSpeed = 183,
-                            Model = "Silverado 1500",
-                            PricePerDay = 140m,
-                            ProductionYear = 2022,
-                            SeatingCapacity = 5,
-                            TankVolume = 90.799999999999997,
-                            TransmissionType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("99fed59f-dce8-4359-8ccb-88efa7781faa"),
-                            CarCategoryId = new Guid("df2cdc1f-46c7-428b-a54b-e03eb0e33a7f"),
-                            CarImage = "https://parkers-images.bauersecure.com/wp-images/174840/bmw_3_series_050.jpg",
-                            DoorsCount = 4,
-                            FuelConsumption = 7.7999999999999998,
-                            IsAvailable = false,
-                            IsDeleted = false,
-                            Make = "BMW",
-                            MaximumSpeed = 250,
-                            Model = "3 Series",
-                            PricePerDay = 75m,
-                            ProductionYear = 2022,
-                            SeatingCapacity = 5,
-                            TankVolume = 59.0,
-                            TransmissionType = 0
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.CarCategory", b =>
@@ -615,48 +297,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("DamageReports");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cdca012a-0a63-4b99-bb3e-45aef2b5d1a3"),
-                            CarId = new Guid("99fed59f-dce8-4359-8ccb-88efa7781faa"),
-                            CostEstimation = 1200.50m,
-                            Description = "Front bumper is severely dented due to a collision with a pole.",
-                            ReportedDate = new DateTime(2024, 12, 4, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7170)
-                        },
-                        new
-                        {
-                            Id = new Guid("a03fad62-483f-4f88-b7e9-1c857c5650de"),
-                            CarId = new Guid("3f821603-c82c-4b46-bc94-8a246e5ca4c1"),
-                            CostEstimation = 600.00m,
-                            Description = "Rear window shattered after an attempted break-in at the parking lot.",
-                            ReportedDate = new DateTime(2024, 11, 27, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7194)
-                        },
-                        new
-                        {
-                            Id = new Guid("6e92a04a-c225-4d2a-a0fe-c85ffa59e726"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            CostEstimation = 750.25m,
-                            Description = "Left side mirror broken and scratches along the driver-side door.",
-                            ReportedDate = new DateTime(2024, 12, 2, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7197)
-                        },
-                        new
-                        {
-                            Id = new Guid("a8faafb7-9cd4-49fc-8edc-d1d76c37db8a"),
-                            CarId = new Guid("eea3a59b-1d08-47d5-82f5-863384b9df71"),
-                            CostEstimation = 1400.00m,
-                            Description = "Hood is dented and paint is chipped from debris falling on the car.",
-                            ReportedDate = new DateTime(2024, 11, 22, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7201)
-                        },
-                        new
-                        {
-                            Id = new Guid("9f6c5e4c-9f4f-48d1-8adb-bc842bfca9b7"),
-                            CarId = new Guid("e3ea8915-979c-478f-b597-4b50e5f31cfd"),
-                            CostEstimation = 1800.75m,
-                            Description = "Tires were slashed and the windshield has a large crack running across.",
-                            ReportedDate = new DateTime(2024, 11, 30, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7204)
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Discount", b =>
@@ -713,26 +353,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("Feedbacks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("480894e9-fb88-4264-b074-419e2db6f68a"),
-                            ApplicationUserId = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            Comment = "Great car, smooth ride!",
-                            FeedbackDate = new DateTime(2024, 11, 29, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8728),
-                            Rating = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("9b33e8de-e4b9-46ba-96b7-63cbee0b45d2"),
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            Comment = "The car was decent but had a few issues.",
-                            FeedbackDate = new DateTime(2024, 12, 1, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8739),
-                            Rating = 2
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Rental", b =>
@@ -759,32 +379,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dcf823b4-33f9-4102-a63d-ae28ee7e7708"),
-                            CarId = new Guid("4590f15d-634b-4a10-9f69-32a88931922f"),
-                            EndDate = new DateTime(2024, 12, 17, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9888),
-                            StartDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9886),
-                            TotalCost = 4541.84m
-                        },
-                        new
-                        {
-                            Id = new Guid("d58bf2b1-b3b1-4f63-9603-05ba7ad3e6f7"),
-                            CarId = new Guid("cbc0f0df-2fbf-4d87-ab77-c214efa3e363"),
-                            EndDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            StartDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            TotalCost = 2151.95m
-                        },
-                        new
-                        {
-                            Id = new Guid("d599bce1-6c7a-401a-9a5b-d10e0736e3d8"),
-                            CarId = new Guid("0f3815d0-37b0-440d-978f-22fe3d9416cc"),
-                            EndDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9902),
-                            StartDate = new DateTime(2024, 12, 8, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9901),
-                            TotalCost = 216m
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

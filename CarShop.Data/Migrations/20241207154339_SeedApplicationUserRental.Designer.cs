@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207154339_SeedApplicationUserRental")]
+    partial class SeedApplicationUserRental
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,15 +95,15 @@ namespace CarShop.Data.Migrations
                         {
                             Id = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe7bbe36-c399-457d-b1fc-80795f18d21e",
+                            ConcurrencyStamp = "70bc9e3a-4022-46cd-a3ec-af6d282bdfd8",
                             Email = "testuser123@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "TESTUSER123@GMAIL.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENcvZLOefZKauKiPlSPEpZg8ZNDmtFdPme0BR2dhr9EIQytLmJnQiJSRj+PlEO2Whg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECRpobjRzY0WNeTRjj4r5RcZBnGva3/8SBKzm3aV7S/CJ+bW3Gjmir/dFktfQwo8og==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4d45d2c7-303a-4c30-83a2-f726a3f9300e",
+                            SecurityStamp = "fcdc10ec-0bbf-404f-8d3b-478a416615dd",
                             TwoFactorEnabled = false,
                             UserName = "User"
                         },
@@ -108,15 +111,15 @@ namespace CarShop.Data.Migrations
                         {
                             Id = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "026d0069-7684-4ee3-8c78-ad7cb01cf592",
+                            ConcurrencyStamp = "78b54a7f-65c0-4e2f-90e5-df7f39ecda8e",
                             Email = "dragomir@yahoo.ca",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "DRAGOMIR@YAHOO.CA",
                             NormalizedUserName = "DRAGOMIR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEaFHFR7hITk+DNK1Vvd6uy7EOku9wsh34HxAWGyHaHD707V02mVarru2zefQ/CeKA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENUcTvc1MRBFShlai9U2TsQZPytxMxtPxkU7zeudyDLboVL8+2wSkqeS4xhmbiLfow==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8f673bbb-bbb6-48df-8a5e-f4f8b4740fa3",
+                            SecurityStamp = "c7b05dd4-0299-489a-b4ed-cd36be1fa02e",
                             TwoFactorEnabled = false,
                             UserName = "Dragomir"
                         },
@@ -124,15 +127,15 @@ namespace CarShop.Data.Migrations
                         {
                             Id = new Guid("49317ff2-5aac-426d-a8bd-d4bee288c776"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1dbcbe5-0d5f-4458-b9d5-6957831a01e1",
+                            ConcurrencyStamp = "a2e223c7-8b64-496f-8a09-82833afaa340",
                             Email = "admin@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "АDMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFHz1zTlayA5TE4aKcLi6SZmrKJmTkAkB7FroHMdswKrRsfxH3H5FFjIo3CZHcj35A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEErQqhERgt2Kuwfh8/AUd4EPFy/4yBKYPuaEH5Es39TD51wlQikOszCKxPMKJsSJ8w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3d679fcb-5ac8-401f-ac2f-48f6668b7f5a",
+                            SecurityStamp = "089176ca-4081-4d3c-9ee7-eafc263ee3bb",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -623,7 +626,7 @@ namespace CarShop.Data.Migrations
                             CarId = new Guid("99fed59f-dce8-4359-8ccb-88efa7781faa"),
                             CostEstimation = 1200.50m,
                             Description = "Front bumper is severely dented due to a collision with a pole.",
-                            ReportedDate = new DateTime(2024, 12, 4, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7170)
+                            ReportedDate = new DateTime(2024, 12, 4, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(8267)
                         },
                         new
                         {
@@ -631,7 +634,7 @@ namespace CarShop.Data.Migrations
                             CarId = new Guid("3f821603-c82c-4b46-bc94-8a246e5ca4c1"),
                             CostEstimation = 600.00m,
                             Description = "Rear window shattered after an attempted break-in at the parking lot.",
-                            ReportedDate = new DateTime(2024, 11, 27, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7194)
+                            ReportedDate = new DateTime(2024, 11, 27, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(8289)
                         },
                         new
                         {
@@ -639,7 +642,7 @@ namespace CarShop.Data.Migrations
                             CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
                             CostEstimation = 750.25m,
                             Description = "Left side mirror broken and scratches along the driver-side door.",
-                            ReportedDate = new DateTime(2024, 12, 2, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7197)
+                            ReportedDate = new DateTime(2024, 12, 2, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(8293)
                         },
                         new
                         {
@@ -647,7 +650,7 @@ namespace CarShop.Data.Migrations
                             CarId = new Guid("eea3a59b-1d08-47d5-82f5-863384b9df71"),
                             CostEstimation = 1400.00m,
                             Description = "Hood is dented and paint is chipped from debris falling on the car.",
-                            ReportedDate = new DateTime(2024, 11, 22, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7201)
+                            ReportedDate = new DateTime(2024, 11, 22, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(8296)
                         },
                         new
                         {
@@ -655,7 +658,7 @@ namespace CarShop.Data.Migrations
                             CarId = new Guid("e3ea8915-979c-478f-b597-4b50e5f31cfd"),
                             CostEstimation = 1800.75m,
                             Description = "Tires were slashed and the windshield has a large crack running across.",
-                            ReportedDate = new DateTime(2024, 11, 30, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7204)
+                            ReportedDate = new DateTime(2024, 11, 30, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(8300)
                         });
                 });
 
@@ -717,20 +720,20 @@ namespace CarShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("480894e9-fb88-4264-b074-419e2db6f68a"),
+                            Id = new Guid("9fdb67f3-35d5-426e-9b16-4c73fa839f6d"),
                             ApplicationUserId = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
                             CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
                             Comment = "Great car, smooth ride!",
-                            FeedbackDate = new DateTime(2024, 11, 29, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8728),
+                            FeedbackDate = new DateTime(2024, 11, 29, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(9420),
                             Rating = 5
                         },
                         new
                         {
-                            Id = new Guid("9b33e8de-e4b9-46ba-96b7-63cbee0b45d2"),
+                            Id = new Guid("bcb6417a-3a68-4ffb-966f-20a2c3a59111"),
                             ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
                             CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
                             Comment = "The car was decent but had a few issues.",
-                            FeedbackDate = new DateTime(2024, 12, 1, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8739),
+                            FeedbackDate = new DateTime(2024, 12, 1, 15, 43, 39, 96, DateTimeKind.Utc).AddTicks(9434),
                             Rating = 2
                         });
                 });
@@ -765,25 +768,25 @@ namespace CarShop.Data.Migrations
                         {
                             Id = new Guid("dcf823b4-33f9-4102-a63d-ae28ee7e7708"),
                             CarId = new Guid("4590f15d-634b-4a10-9f69-32a88931922f"),
-                            EndDate = new DateTime(2024, 12, 17, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9888),
-                            StartDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9886),
-                            TotalCost = 4541.84m
+                            EndDate = new DateTime(2024, 11, 30, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(601),
+                            StartDate = new DateTime(2024, 11, 27, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(598),
+                            TotalCost = 300.00m
                         },
                         new
                         {
                             Id = new Guid("d58bf2b1-b3b1-4f63-9603-05ba7ad3e6f7"),
                             CarId = new Guid("cbc0f0df-2fbf-4d87-ab77-c214efa3e363"),
-                            EndDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            StartDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            TotalCost = 2151.95m
+                            EndDate = new DateTime(2024, 12, 5, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(613),
+                            StartDate = new DateTime(2024, 12, 2, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(612),
+                            TotalCost = 450.00m
                         },
                         new
                         {
                             Id = new Guid("d599bce1-6c7a-401a-9a5b-d10e0736e3d8"),
                             CarId = new Guid("0f3815d0-37b0-440d-978f-22fe3d9416cc"),
-                            EndDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9902),
-                            StartDate = new DateTime(2024, 12, 8, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9901),
-                            TotalCost = 216m
+                            EndDate = new DateTime(2024, 12, 6, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(617),
+                            StartDate = new DateTime(2024, 12, 4, 15, 43, 39, 97, DateTimeKind.Utc).AddTicks(616),
+                            TotalCost = 200.00m
                         });
                 });
 

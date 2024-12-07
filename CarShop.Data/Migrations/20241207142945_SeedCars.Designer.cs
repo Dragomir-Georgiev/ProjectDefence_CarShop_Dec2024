@@ -4,6 +4,7 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207142945_SeedCars")]
+    partial class SeedCars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,56 +89,6 @@ namespace CarShop.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe7bbe36-c399-457d-b1fc-80795f18d21e",
-                            Email = "testuser123@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TESTUSER123@GMAIL.COM",
-                            NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENcvZLOefZKauKiPlSPEpZg8ZNDmtFdPme0BR2dhr9EIQytLmJnQiJSRj+PlEO2Whg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4d45d2c7-303a-4c30-83a2-f726a3f9300e",
-                            TwoFactorEnabled = false,
-                            UserName = "User"
-                        },
-                        new
-                        {
-                            Id = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "026d0069-7684-4ee3-8c78-ad7cb01cf592",
-                            Email = "dragomir@yahoo.ca",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "DRAGOMIR@YAHOO.CA",
-                            NormalizedUserName = "DRAGOMIR",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEaFHFR7hITk+DNK1Vvd6uy7EOku9wsh34HxAWGyHaHD707V02mVarru2zefQ/CeKA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "8f673bbb-bbb6-48df-8a5e-f4f8b4740fa3",
-                            TwoFactorEnabled = false,
-                            UserName = "Dragomir"
-                        },
-                        new
-                        {
-                            Id = new Guid("49317ff2-5aac-426d-a8bd-d4bee288c776"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1dbcbe5-0d5f-4458-b9d5-6957831a01e1",
-                            Email = "admin@example.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "АDMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFHz1zTlayA5TE4aKcLi6SZmrKJmTkAkB7FroHMdswKrRsfxH3H5FFjIo3CZHcj35A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3d679fcb-5ac8-401f-ac2f-48f6668b7f5a",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.ApplicationUserRental", b =>
@@ -153,23 +106,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("RentalId");
 
                     b.ToTable("ApplicationsUsersRentals");
-
-                    b.HasData(
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("dcf823b4-33f9-4102-a63d-ae28ee7e7708")
-                        },
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("d58bf2b1-b3b1-4f63-9603-05ba7ad3e6f7")
-                        },
-                        new
-                        {
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            RentalId = new Guid("d599bce1-6c7a-401a-9a5b-d10e0736e3d8")
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Car", b =>
@@ -253,7 +189,7 @@ namespace CarShop.Data.Migrations
                             CarImage = "https://r44performance.com/cdn/shop/articles/R44Performance-Porsche-911-GT3RS.jpg?v=1710775245&width=1500",
                             DoorsCount = 2,
                             FuelConsumption = 13.800000000000001,
-                            IsAvailable = false,
+                            IsAvailable = true,
                             IsDeleted = false,
                             Make = "Porsche",
                             MaximumSpeed = 311,
@@ -379,7 +315,7 @@ namespace CarShop.Data.Migrations
                             CarImage = "https://www.auto-data.net/images/f24/file8561751.jpg",
                             DoorsCount = 2,
                             FuelConsumption = 7.0,
-                            IsAvailable = false,
+                            IsAvailable = true,
                             IsDeleted = false,
                             Make = "Audi",
                             MaximumSpeed = 250,
@@ -397,7 +333,7 @@ namespace CarShop.Data.Migrations
                             CarImage = "https://www.passportbmw.com/blogs/846/wp-content/uploads/2022/09/P90479453__mid.jpeg",
                             DoorsCount = 2,
                             FuelConsumption = 7.9000000000000004,
-                            IsAvailable = false,
+                            IsAvailable = true,
                             IsDeleted = false,
                             Make = "BMW",
                             MaximumSpeed = 250,
@@ -615,48 +551,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("DamageReports");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cdca012a-0a63-4b99-bb3e-45aef2b5d1a3"),
-                            CarId = new Guid("99fed59f-dce8-4359-8ccb-88efa7781faa"),
-                            CostEstimation = 1200.50m,
-                            Description = "Front bumper is severely dented due to a collision with a pole.",
-                            ReportedDate = new DateTime(2024, 12, 4, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7170)
-                        },
-                        new
-                        {
-                            Id = new Guid("a03fad62-483f-4f88-b7e9-1c857c5650de"),
-                            CarId = new Guid("3f821603-c82c-4b46-bc94-8a246e5ca4c1"),
-                            CostEstimation = 600.00m,
-                            Description = "Rear window shattered after an attempted break-in at the parking lot.",
-                            ReportedDate = new DateTime(2024, 11, 27, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7194)
-                        },
-                        new
-                        {
-                            Id = new Guid("6e92a04a-c225-4d2a-a0fe-c85ffa59e726"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            CostEstimation = 750.25m,
-                            Description = "Left side mirror broken and scratches along the driver-side door.",
-                            ReportedDate = new DateTime(2024, 12, 2, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7197)
-                        },
-                        new
-                        {
-                            Id = new Guid("a8faafb7-9cd4-49fc-8edc-d1d76c37db8a"),
-                            CarId = new Guid("eea3a59b-1d08-47d5-82f5-863384b9df71"),
-                            CostEstimation = 1400.00m,
-                            Description = "Hood is dented and paint is chipped from debris falling on the car.",
-                            ReportedDate = new DateTime(2024, 11, 22, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7201)
-                        },
-                        new
-                        {
-                            Id = new Guid("9f6c5e4c-9f4f-48d1-8adb-bc842bfca9b7"),
-                            CarId = new Guid("e3ea8915-979c-478f-b597-4b50e5f31cfd"),
-                            CostEstimation = 1800.75m,
-                            Description = "Tires were slashed and the windshield has a large crack running across.",
-                            ReportedDate = new DateTime(2024, 11, 30, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(7204)
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Discount", b =>
@@ -713,26 +607,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("Feedbacks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("480894e9-fb88-4264-b074-419e2db6f68a"),
-                            ApplicationUserId = new Guid("7d98badc-6c8c-4588-a4f5-d4a43ca9d741"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            Comment = "Great car, smooth ride!",
-                            FeedbackDate = new DateTime(2024, 11, 29, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8728),
-                            Rating = 5
-                        },
-                        new
-                        {
-                            Id = new Guid("9b33e8de-e4b9-46ba-96b7-63cbee0b45d2"),
-                            ApplicationUserId = new Guid("4c2d88cd-675a-4904-a431-23a043e8313e"),
-                            CarId = new Guid("29480900-2b63-4503-8818-647fde2a47e5"),
-                            Comment = "The car was decent but had a few issues.",
-                            FeedbackDate = new DateTime(2024, 12, 1, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(8739),
-                            Rating = 2
-                        });
                 });
 
             modelBuilder.Entity("CarShop.Data.Models.Rental", b =>
@@ -759,32 +633,6 @@ namespace CarShop.Data.Migrations
                     b.HasIndex("CarId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dcf823b4-33f9-4102-a63d-ae28ee7e7708"),
-                            CarId = new Guid("4590f15d-634b-4a10-9f69-32a88931922f"),
-                            EndDate = new DateTime(2024, 12, 17, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9888),
-                            StartDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9886),
-                            TotalCost = 4541.84m
-                        },
-                        new
-                        {
-                            Id = new Guid("d58bf2b1-b3b1-4f63-9603-05ba7ad3e6f7"),
-                            CarId = new Guid("cbc0f0df-2fbf-4d87-ab77-c214efa3e363"),
-                            EndDate = new DateTime(2024, 12, 14, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            StartDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9898),
-                            TotalCost = 2151.95m
-                        },
-                        new
-                        {
-                            Id = new Guid("d599bce1-6c7a-401a-9a5b-d10e0736e3d8"),
-                            CarId = new Guid("0f3815d0-37b0-440d-978f-22fe3d9416cc"),
-                            EndDate = new DateTime(2024, 12, 10, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9902),
-                            StartDate = new DateTime(2024, 12, 8, 15, 54, 56, 640, DateTimeKind.Utc).AddTicks(9901),
-                            TotalCost = 216m
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
