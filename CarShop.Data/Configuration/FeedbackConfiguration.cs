@@ -22,7 +22,7 @@ namespace CarShop.Data.Configuration
 			{
 				new Feedback
 				{
-					Id = Guid.NewGuid(),
+					Id = Guid.Parse("9F802F93-1B20-401C-9C5E-ADB2B51597F3"),
 					CarId = Guid.Parse("29480900-2B63-4503-8818-647FDE2A47E5"),
 					ApplicationUserId = Guid.Parse("7D98BADC-6C8C-4588-A4F5-D4A43CA9D741"),
 					Comment = "Great car, smooth ride!",
@@ -31,7 +31,7 @@ namespace CarShop.Data.Configuration
 				},
 				new Feedback
 				{
-					Id = Guid.NewGuid(),
+					Id = Guid.Parse("2C473F9E-326E-4F71-9810-FBFF216FDC6F"),
 					CarId = Guid.Parse("29480900-2B63-4503-8818-647FDE2A47E5"),
 					ApplicationUserId = Guid.Parse("4C2D88CD-675A-4904-A431-23A043E8313E"),
 					Comment = "The car was decent but had a few issues.",

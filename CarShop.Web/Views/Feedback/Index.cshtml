@@ -6,8 +6,7 @@
 }
 
 <h1>Feedback for @Model.CarMakeModel</h1>
-
-<a asp-action="AddFeedback" asp-route-carId="@Model.CarId" class="btn btn-primary mb-4">Add Feedback</a>
+<a asp-action="AddFeedback" asp-route-carId="@Model.CarId" class="btn btn-primary mb-4 mt-4">Add Feedback</a>
 
 @if (Model.Feedbacks.Any())
 {
@@ -27,9 +26,7 @@
                     <div class="d-flex gap-2">
                         @if (feedback.IsOwner)
                         {
-                            <form asp-action="EditFeedback" asp-route-id="@feedback.Id" method="get" class="mr-2">
-                                <button class="btn btn-warning btn-sm">Edit</button>
-                            </form>
+                            <a asp-action="EditFeedback" asp-route-id="@feedback.Id" method="get" class="btn btn-warning btn-sm mr-2">Edit</a>
                             <form asp-action="RemoveFeedback" asp-route-id="@feedback.Id" asp-route-carId="@Model.CarId" method="post">
                                 <button class="btn btn-danger btn-sm">Remove</button>
                             </form>

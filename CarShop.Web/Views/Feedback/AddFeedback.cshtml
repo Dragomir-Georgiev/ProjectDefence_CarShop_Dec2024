@@ -27,7 +27,8 @@
         </select>
         <span asp-validation-for="Rating" class="text-danger"></span>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a asp-action="Index" asp-route-carId="@Model.CarId" class="btn btn-secondary">Cancel</a>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-action="Index" asp-route-carId="@Model.CarId" class="btn btn-secondary">Cancel</a>
+    </div>
 </form>
