@@ -55,7 +55,7 @@ namespace CarShop.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveRole(string userId, string role)
+        public async Task<IActionResult> RemoveRole(string userId, string? role)
         {
             Guid userGuid = Guid.Empty;
             if (!this.IsGuidValid(userId, ref userGuid))
@@ -68,6 +68,11 @@ namespace CarShop.Web.Areas.Admin.Controllers
             if (!userExists)
             {
                 return this.RedirectToAction(nameof(Index));
+            }
+
+            if (role == null)
+            {
+                role = "";
             }
 
             bool removeResult = await this.userService
