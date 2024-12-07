@@ -52,7 +52,7 @@ namespace CarShop.Data.Models
         [Comment("Price for the car per day")]
         public decimal PricePerDay { get; set; }
         [Comment("Availability of the car")]
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; } = true;
         [Comment("Has the car been removed or not removed from the list of available rental cars")]
         public bool IsDeleted { get; set; }
         [Comment("The unique identifier of the category of the car")]
