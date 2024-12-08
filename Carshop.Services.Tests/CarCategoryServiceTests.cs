@@ -14,11 +14,13 @@ namespace Carshop.Services.Tests
     public class CarCategoryServiceTests
     {
         private Mock<IRepository<CarCategory, Guid>> _mockCategoryRepository;
+        private ICarCategoryService _carCategoryService;
 
         [SetUp]
         public void SetUp()
         {
             _mockCategoryRepository = new Mock<IRepository<CarCategory, Guid>>();
+            _carCategoryService = new CarCategoryService(_mockCategoryRepository.Object);
         }
 
         [Test]
@@ -26,20 +28,17 @@ namespace Carshop.Services.Tests
         {
             IQueryable<CarCategory> categories = new List<CarCategory>()
             {
-                new CarCategory() { Id = Guid.Parse("1D641640-809D-42B1-8A00-18E6CB90A1A8"), CategoryName = "SUV" },
-                new CarCategory() { Id = Guid.Parse("45270723-036F-442A-BE03-C43561589F13"), CategoryName = "Sedan" },
-                new CarCategory() { Id = Guid.Parse("3030A872-DA71-4E9F-9B61-DA6CA8EA0190"), CategoryName = "Truck" }
+                new CarCategory() { Id = Guid.Parse("5E5B45B5-6BCE-4E8C-A05A-EB6D5540F9CE"), CategoryName = "SUV" },
+                new CarCategory() { Id = Guid.Parse("DF2CDC1F-46C7-428B-A54B-E03EB0E33A7F"), CategoryName = "Sedan" },
+                new CarCategory() { Id = Guid.Parse("A69FE7AC-6AD4-403F-BA76-EEFBC3A691C6"), CategoryName = "Pickup truck" }
             }
-            .AsQueryable()
             .BuildMock();
 
             _mockCategoryRepository
                 .Setup(repo => repo.GetAllAttached())
                 .Returns(categories);
 
-            ICarCategoryService carCategoryService = new CarCategoryService(_mockCategoryRepository.Object);
-
-            var result = await carCategoryService.GetCarCategoriesAsync();
+            var result = await _carCategoryService.GetCarCategoriesAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(categories.Count()));
@@ -54,14 +53,11 @@ namespace Carshop.Services.Tests
         public async Task GetCarCategoriesAsyncShouldReturnEmptyListIfThereAreNoCarCategories()
         {
             IQueryable<CarCategory> emptyCategories = new List<CarCategory>()
-                .AsQueryable()
                 .BuildMock();
 
             _mockCategoryRepository
                 .Setup(repo => repo.GetAllAttached())
                 .Returns(emptyCategories);
-
-            ICarCategoryService _carCategoryService = new CarCategoryService(_mockCategoryRepository.Object);
 
             var result = await _carCategoryService.GetCarCategoriesAsync();
 
