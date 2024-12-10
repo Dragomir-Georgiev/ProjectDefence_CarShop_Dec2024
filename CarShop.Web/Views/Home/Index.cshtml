@@ -1,8 +1,101 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Our Rental Service!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section mb-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 hero-title">Find Your Perfect Ride</h1>
+        <p class="lead mt-3 hero-subtitle">Explore a wide range of vehicles available for rent at affordable prices.</p>
+        <a asp-controller="Car" asp-action="Index" class="btn btn-primary btn-lg mt-4">Browse Cars</a>
+    </div>
 </div>
+
+<section class="features py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-car fa-3x mb-3 text-primary"></i>
+                <h5 class="fw-bold">Wide Selection of Cars</h5>
+                <p>Choose from sedans, SUVs, sports cars, and more, all at competitive prices.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-dollar-sign fa-3x mb-3 text-primary"></i>
+                <h5 class="fw-bold">Affordable Rates</h5>
+                <p>Get the best deals and transparent pricing with no hidden fees.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-clock fa-3x mb-3 text-primary"></i>
+                <h5 class="fw-bold">24/7 Support</h5>
+                <p>Need help? Our team is available around the clock to assist you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-us py-5">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <h2 class="fw-bold">Why Choose Us?</h2>
+                <p>
+                    At <strong>Our Rental Service</strong>, we strive to provide a seamless car rental experience.
+                    With a focus on customer satisfaction, we ensure every journey starts and ends with comfort, convenience, and reliability.
+                </p>
+                <a asp-controller="Home" asp-action="About" class="btn btn-outline-primary mt-3">Learn More</a>
+            </div>
+            <div class="col-md-6">
+                <img src="/images/about-us.jpg" class="img-fluid rounded" alt="Why Choose Us">
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        position: relative;
+        background: url('/images/hero-image.png') no-repeat center center;
+        background-size: cover;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .hero-title {
+        font-size: 3rem; 
+        font-weight: 900;
+        color: white;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .features i {
+        color: #007bff;
+    }
+
+    .about-us img {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+</style>
