@@ -96,7 +96,7 @@ namespace CarShop.Web.Controllers
             }
             return RedirectToAction(nameof(RentedCars));
         }
-
+        //REMOVE ERRORS
         [HttpGet]
         public async Task<IActionResult> RentedCars()
         {

@@ -16,6 +16,8 @@ namespace CarShop.Web.ViewModels.Car
     public class EditCarViewModel : IMapFrom<Car>
     {
         [Required]
+        public string Id { get; set; } = null!;
+        [Required]
         [StringLength(MakeMaxLength, MinimumLength = MakeMinLength, ErrorMessage = "Make needs to be between 3 and 60 characters.")]
         public string Make { get; set; } = string.Empty;
         [Required]

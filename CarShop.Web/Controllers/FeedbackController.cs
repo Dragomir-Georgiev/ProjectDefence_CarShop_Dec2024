@@ -71,7 +71,7 @@ namespace CarShop.Web.Controllers
 
             return RedirectToAction("Index", new { carId = viewModel.CarId });
         }
-
+        //REMOVE ERRORS FROM HERE
         [HttpGet]
         public async Task<IActionResult> EditFeedback(Guid id)
         {
