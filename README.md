@@ -64,18 +64,17 @@ CarShop is a simple to use car rental management system built with **ASP.NET Cor
   ```bash
   dotnet tool install --global dotnet-ef
   ```
-- Install the following nuget packages if you having trouble updating the database:
-  ```bash
-  Microsoft.EntityFrameworkCore.SqlServer Version="8.0.10"
-  Microsoft.EntityFrameworkCore.Tools Version="8.0.10"
-  ```
 - Open the package manager console in visual studio.
 - Select Data\CarShop.Data as the default project.
 - Write and execute:
    ```bash
    Update-Database
    ```
-
+- Install the following nuget packages if you having trouble updating the database:
+  ```bash
+  Microsoft.EntityFrameworkCore.SqlServer Version="8.0.10"
+  Microsoft.EntityFrameworkCore.Tools Version="8.0.10"
+  ```
 4. Run the application:
 - While the project is open is visual studio, press CTRL + F5.
 
