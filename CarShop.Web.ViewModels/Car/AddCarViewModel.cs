@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static CarShop.Common.EntityValidationConstants.Car;
+using static CarShop.Common.EntityValidationMessages.Car;
 namespace CarShop.Web.ViewModels.Car
 {
     using Data.Models;
@@ -16,35 +17,35 @@ namespace CarShop.Web.ViewModels.Car
     public class AddCarViewModel : IMapTo<Car>
     {
         [Required]
-        [StringLength(MakeMaxLength, MinimumLength = MakeMinLength, ErrorMessage = "Make needs to be between 3 and 60 characters.")]
+        [StringLength(MakeMaxLength, MinimumLength = MakeMinLength, ErrorMessage = MakeRequiredMessage)]
         public string Make { get; set; } = string.Empty;
         [Required]
-        [StringLength(ModelMaxLenght, MinimumLength = ModelMinLenght, ErrorMessage = "Model needs to be between 3 and 60 characters.")]
+        [StringLength(ModelMaxLenght, MinimumLength = ModelMinLenght, ErrorMessage = ModelRequiredMessage)]
         public string Model { get; set; } = string.Empty;
         [Required]
-        [Range(ProductionYearMinRange, ProductionYearMaxRange, ErrorMessage = "Please enter a valid production year.")]
+        [Range(ProductionYearMinRange, ProductionYearMaxRange, ErrorMessage = ProductionYearRequiredMessage)]
         public int ProductionYear { get; set; }
         [Required]
-        [Range(FuelConsumptionMinRange, FuelConsumptionMaxRange, ErrorMessage = "Fuel consumption must be a positive number.")]
+        [Range(FuelConsumptionMinRange, FuelConsumptionMaxRange, ErrorMessage = FuelConsumptionRequiredMessage)]
         public double FuelConsumption { get; set; }
         [Required]
-        [Range(TankVolumeMinRange, TankVolumeMaxRange, ErrorMessage = "Tank volume must be a positive number.")]
+        [Range(TankVolumeMinRange, TankVolumeMaxRange, ErrorMessage = TankVolumeRequiredMessage)]
         public double TankVolume { get; set; }
         [Required]
-        [Range(MaximumSpeedMinRange, MaximumSpeedMaxRange, ErrorMessage = "Maximum speed must be a positive number.")]
+        [Range(MaximumSpeedMinRange, MaximumSpeedMaxRange, ErrorMessage = MaximumSpeedRequiredMessage)]
         public int MaximumSpeed { get; set; }
         [MaxLength(CarImageMaxLength)]
         public string? CarImage { get; set; }
         [Required]
-        [Range(DoorsCountMinRange, DoorsCountMaxRange, ErrorMessage = "Doors count must be between 1 and 10.")]
+        [Range(DoorsCountMinRange, DoorsCountMaxRange, ErrorMessage = DoorsCountRequiredMessage)]
         public int DoorsCount { get; set; }
         [Required]
-        [Range(SeatingCapacityMinRange, SeatingCapacityMaxRange, ErrorMessage = "Seating capacity must be between 1 and 20.")]
+        [Range(SeatingCapacityMinRange, SeatingCapacityMaxRange, ErrorMessage = SeatingCapacityRequiredMessage)]
         public int SeatingCapacity { get; set; }
         [Required]
         public TransmissionType TransmissionType { get; set; }
         [Required]
-        [Range((typeof(decimal)), PricePerDayMinRange, PricePerDayMaxRange, ErrorMessage = "Price per day must be a positive number.")]
+        [Range((typeof(decimal)), PricePerDayMinRange, PricePerDayMaxRange, ErrorMessage = PricePerDayRequiredMessage)]
         public decimal PricePerDay { get; set; }
         [Required]
         public Guid CarCategoryId { get; set; }

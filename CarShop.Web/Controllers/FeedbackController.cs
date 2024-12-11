@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static CarShop.Common.EntityValidationMessages.Feedback;
 
 namespace CarShop.Web.Controllers
 {
@@ -65,7 +66,7 @@ namespace CarShop.Web.Controllers
             bool result = await _feedbackService.AddFeedbackAsync(viewModel, userId);
             if (result == false)
             {
-                this.ModelState.AddModelError(nameof(viewModel.CarId),"Invalide car Id");
+                this.ModelState.AddModelError(nameof(viewModel.CarId), InvalidCarIdMessage);
                 return this.RedirectToAction("Index", "Car");
             }
 
@@ -84,7 +85,7 @@ namespace CarShop.Web.Controllers
             var viewModel = await _feedbackService.GetFeedbackForEditAsync(id, userId);
             if (viewModel == null)
             {
-                this.ModelState.AddModelError(nameof(viewModel.Id), "You do not have permission to edit this feedback.");
+                this.ModelState.AddModelError(nameof(viewModel.Id), InvalidFeedbackUserEditMessage);
                 return this.RedirectToAction("Index", "Car");
             }
 
@@ -107,7 +108,7 @@ namespace CarShop.Web.Controllers
             bool result = await _feedbackService.EditFeedbackAsync(form, userId);
             if (result == false)
             {
-                this.ModelState.AddModelError(nameof(form.Id), "You do not have permission to edit this feedback.");
+                this.ModelState.AddModelError(nameof(form.Id), InvalidFeedbackUserEditMessage);
                 return this.RedirectToAction("Index", "Car");
             }
 
@@ -126,7 +127,7 @@ namespace CarShop.Web.Controllers
             bool result = await _feedbackService.RemoveFeedbackAsync(id, userId);
             if (result == false)
             {
-                this.ModelState.AddModelError(nameof(userId), "You do not have permission to edit this feedback.");
+                this.ModelState.AddModelError(nameof(userId), InvalidFeedbackUserEditMessage);
                 return this.RedirectToAction("Index", "Car");
             }
 

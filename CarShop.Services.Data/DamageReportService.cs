@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CarShop.Common.EntityValidationMessages.DamageReport;
 
 namespace CarShop.Services.Data
 {
@@ -53,7 +54,7 @@ namespace CarShop.Services.Data
             var validCar = await _carRepository.GetByIdAsync(form.CarId);
             if (validCar == null)
             {
-                throw new ArgumentException("Invalid car ID");
+                throw new ArgumentException(InvalidCarIdMessage);
             }
 
             validCar.IsAvailable = false;
@@ -92,7 +93,7 @@ namespace CarShop.Services.Data
             var report = await _damageReportRepository.GetByIdAsync(form.Id);
             if (report == null)
             {
-                throw new ArgumentException("Invalid damage report ID");
+                throw new ArgumentException(InvalidDamageReportIdMessage);
             }
 
             report.Description = form.Description;
@@ -105,13 +106,13 @@ namespace CarShop.Services.Data
             var report = await _damageReportRepository.GetByIdAsync(reportId);
             if (report == null)
             {
-                throw new ArgumentException("Invalid damage report ID");
+                throw new ArgumentException(InvalidDamageReportIdMessage);
             }
 
             var validCar = await _carRepository.GetByIdAsync(report.CarId);
             if (validCar == null)
             {
-                throw new ArgumentException("Invalid car ID");
+                throw new ArgumentException(InvalidCarIdMessage);
             }
 
             if (!validCar.Rentals.Any())

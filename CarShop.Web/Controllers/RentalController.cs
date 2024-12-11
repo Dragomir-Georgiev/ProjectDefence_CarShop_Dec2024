@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using CarShop.Services.Data.Interfaces;
 using CarShop.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using static CarShop.Common.EntityValidationMessages.Rental;
 
 namespace CarShop.Web.Controllers
 {
@@ -91,12 +92,12 @@ namespace CarShop.Web.Controllers
             bool result = await _rentalService.AddRentalAsync(viewModel, userId, carGuid);
             if (result == false)
             {
-                this.ModelState.AddModelError(nameof(viewModel.CarId), "Invalide car Id");
+                this.ModelState.AddModelError(nameof(viewModel.CarId), InvalidCarIdMessage);
                 return this.RedirectToAction("Index", "Car");
             }
             return RedirectToAction(nameof(RentedCars));
         }
-        //REMOVE ERRORS
+
         [HttpGet]
         public async Task<IActionResult> RentedCars()
         {
@@ -122,7 +123,7 @@ namespace CarShop.Web.Controllers
             bool result = await _rentalService.RemoveRentalAsync(rentalId, userId);
             if (result == false) 
             {
-                this.ModelState.AddModelError(nameof(userId), "You do not have permission to remove this rental.");
+                this.ModelState.AddModelError(nameof(userId), InvalidUserRentalRemoveMessage);
                 return this.RedirectToAction("Index", "Car");
             }
 
