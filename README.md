@@ -60,6 +60,10 @@ CarShop is a simple to use car rental management system built with **ASP.NET Cor
 - Update the DefaultConnection string with your SQL Server instance details
 
 3. Run Database Migrations:
+- Install the EF Core CLI tools (if not already installed)
+  ```bash
+  dotnet tool install --global dotnet-ef
+  ```
 - Open the package manager console in visual studio.
 - Select Data\CarShop.Data as the default project.
 - Write and execute:
