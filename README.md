@@ -61,17 +61,14 @@ CarShop is a simple to use car rental management system built with **ASP.NET Cor
 - Update the DefaultConnection string with your SQL Server instance details
 
 3. Run Database Migrations:
-- Install the EF Core CLI tools (if not already installed)
-  ```bash
-  dotnet tool install --global dotnet-ef
-  ```
+- At the top center of the project, Select/Make the CarShop.Web as your default startup project.
 - Open the package manager console in visual studio.
-- Select Data\CarShop.Data as the default project.
+- Select Data\CarShop.Data as the default project for the package manager console.
 - Write and execute:
    ```bash
    Update-Database
    ```
-- Install the following nuget packages if you having trouble updating the database:
+- Reinstall the following nuget packages if you having trouble updating the database:
   ```bash
   Microsoft.EntityFrameworkCore.SqlServer Version="8.0.10"
   Microsoft.EntityFrameworkCore.Tools Version="8.0.10"
@@ -83,7 +80,7 @@ CarShop is a simple to use car rental management system built with **ASP.NET Cor
    ```
    http://localhost:7279
    ```
-   If your default port is different. Make sure to change it for the https profile in CarShop.Web\Properties\launchSettings.json
+   If your default port is different. Make sure to change it in the https profile in CarShop.Web\Properties\launchSettings.json
 
 ---
 
