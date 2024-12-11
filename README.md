@@ -47,8 +47,7 @@ CarShop is a simple to use car rental management system built with **ASP.NET Cor
 ### Prerequisites:
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-- [Visual Studio](https://visualstudio.microsoft.com/)
-- Version of visual studio **Needs** to be at least 17.7 to be able to support .NET 8.0
+- [Visual Studio](https://visualstudio.microsoft.com/) (Version of visual studio **Needs** to be at least 17.7 to be able to support .NET 8.0)
 
 ### Steps to Run Locally:
 1. Clone the repository:
